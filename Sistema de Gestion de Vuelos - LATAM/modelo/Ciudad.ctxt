@@ -1,0 +1,28 @@
+#BlueJ class context
+#Thu Oct 29 17:44:30 COT 2026
+comment0.target=Ciudad
+comment1.target=Ciudad()
+comment10.params=aerolinea
+comment10.target=void setAerolinea(Aerolinea)
+comment11.target=java.util.ArrayList getRutasSalida()
+comment12.target=java.util.ArrayList getRutasLlegada()
+comment13.target=void habilitar()
+comment14.params=ruta
+comment14.target=void agregarRutaSalida(Ruta)
+comment15.params=ruta
+comment15.target=void agregarRutaLlegada(Ruta)
+comment16.params=codigo
+comment16.target=boolean esCodigoValido(java.lang.String)
+comment17.target=java.lang.String toString()
+comment2.params=codigo nombre habilitada pais aerolinea rutasSalida rutasLlegada
+comment2.target=Ciudad(java.lang.String, java.lang.String, boolean, Pais, Aerolinea, java.util.ArrayList, java.util.ArrayList)
+comment3.target=java.lang.String getCodigo()
+comment4.target=java.lang.String getNombre()
+comment5.params=nombre
+comment5.target=void setNombre(java.lang.String)
+comment6.target=boolean isHabilitada()
+comment7.target=Pais getPais()
+comment8.params=pais
+comment8.target=void setPais(Pais)
+comment9.target=Aerolinea getAerolinea()
+numComments=18

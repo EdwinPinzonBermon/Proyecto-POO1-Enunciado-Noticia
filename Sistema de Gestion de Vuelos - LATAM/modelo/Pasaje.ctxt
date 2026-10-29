@@ -1,0 +1,17 @@
+#BlueJ class context
+#Thu Oct 29 17:44:30 COT 2026
+comment0.target=Pasaje
+comment1.target=Pasaje()
+comment10.target=boolean cancelar()
+comment11.target=boolean estaCancelado()
+comment12.target=java.lang.String toString()
+comment2.params=numeroAsiento precioBase vuelo pasajero
+comment2.target=Pasaje(int, int, Vuelo, Pasajero)
+comment3.target=int getNumeroAsiento()
+comment4.target=int getPrecioBase()
+comment5.target=EstadoPasaje getEstado()
+comment6.target=Vuelo getVuelo()
+comment7.target=Pasajero getPasajero()
+comment8.target=ClasePasaje getClase()
+comment9.target=int calcularPrecioFinal()
+numComments=13

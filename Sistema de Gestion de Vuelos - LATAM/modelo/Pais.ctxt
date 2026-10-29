@@ -1,0 +1,17 @@
+#BlueJ class context
+#Thu Oct 29 17:44:30 COT 2026
+comment0.target=Pais
+comment1.target=Pais()
+comment2.params=codigo nombre ciudades
+comment2.target=Pais(java.lang.String, java.lang.String, java.util.ArrayList)
+comment3.target=java.lang.String getCodigo()
+comment4.target=java.lang.String getNombre()
+comment5.params=nombre
+comment5.target=void setNombre(java.lang.String)
+comment6.target=java.util.ArrayList getCiudades()
+comment7.params=ciudad
+comment7.target=boolean agregarCiudad(Ciudad)
+comment8.params=codigo
+comment8.target=Ciudad buscarCiudad(java.lang.String)
+comment9.target=java.lang.String toString()
+numComments=10

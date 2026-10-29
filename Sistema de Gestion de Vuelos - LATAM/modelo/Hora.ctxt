@@ -1,0 +1,17 @@
+#BlueJ class context
+#Thu Oct 29 17:31:43 COT 2026
+comment0.target=Hora
+comment1.target=Hora()
+comment2.params=hora minuto
+comment2.target=Hora(int, int)
+comment3.target=int getHora()
+comment4.params=hora
+comment4.target=void setHora(int)
+comment5.target=int getMinuto()
+comment6.params=minuto
+comment6.target=void setMinuto(int)
+comment7.target=boolean esValida()
+comment8.params=otra
+comment8.target=boolean esAnteriorA(Hora)
+comment9.target=java.lang.String toString()
+numComments=10

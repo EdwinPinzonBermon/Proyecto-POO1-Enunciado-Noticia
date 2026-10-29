@@ -1,0 +1,14 @@
+#BlueJ class context
+#Thu Oct 29 17:30:35 COT 2026
+comment0.target=Persona
+comment1.target=Persona()
+comment2.params=id nombre
+comment2.target=Persona(java.lang.String, java.lang.String)
+comment3.target=java.lang.String getId()
+comment4.target=java.lang.String getNombre()
+comment5.params=nombre
+comment5.target=void setNombre(java.lang.String)
+comment6.params=id
+comment6.target=boolean esIdValido(java.lang.String)
+comment7.target=java.lang.String toString()
+numComments=8

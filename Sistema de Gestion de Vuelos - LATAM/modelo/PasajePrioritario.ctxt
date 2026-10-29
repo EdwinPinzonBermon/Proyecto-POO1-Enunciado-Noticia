@@ -1,0 +1,11 @@
+#BlueJ class context
+#Thu Oct 29 17:44:30 COT 2026
+comment0.target=PasajePrioritario
+comment1.target=PasajePrioritario()
+comment2.params=numeroAsiento precioBase vuelo pasajero
+comment2.target=PasajePrioritario(int, int, Vuelo, Pasajero)
+comment3.target=ClasePasaje getClase()
+comment4.target=int calcularRecargo()
+comment5.target=int calcularPrecioFinal()
+comment6.target=java.lang.String toString()
+numComments=7

@@ -1,0 +1,13 @@
+#BlueJ class context
+#Thu Oct 29 17:44:30 COT 2026
+comment0.target=Pasajero
+comment1.target=Pasajero()
+comment2.params=id nombre pasajes
+comment2.target=Pasajero(java.lang.String, java.lang.String, java.util.ArrayList)
+comment3.target=java.util.ArrayList getPasajes()
+comment4.params=pasaje
+comment4.target=void agregarPasaje(Pasaje)
+comment5.params=vuelo
+comment5.target=boolean tienePasajeNoCancelado(Vuelo)
+comment6.target=java.lang.String toString()
+numComments=7

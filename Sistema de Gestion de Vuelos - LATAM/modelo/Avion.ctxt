@@ -1,0 +1,31 @@
+#BlueJ class context
+#Thu Oct 29 17:44:30 COT 2026
+comment0.target=Avion
+comment1.target=Avion()
+comment10.target=java.util.ArrayList getVuelos()
+comment11.target=Aerolinea getAerolinea()
+comment12.params=aerolinea
+comment12.target=void setAerolinea(Aerolinea)
+comment13.target=boolean estaLibre()
+comment14.target=boolean tieneVueloActivo()
+comment15.params=capacidadVuelo
+comment15.target=boolean cubreCapacidad(int)
+comment16.params=capacidadVuelo prioritariosVuelo
+comment16.target=boolean cubreCapacidadYPrioritarios(int, int)
+comment17.params=vuelo
+comment17.target=boolean asignarAVuelo(Vuelo)
+comment18.params=matricula
+comment18.target=boolean esMatriculaValida(java.lang.String)
+comment19.target=java.lang.String toString()
+comment2.params=matricula modelo color capacidad asientosPrioritarios vuelos aerolinea
+comment2.target=Avion(java.lang.String, java.lang.String, java.lang.String, int, int, java.util.ArrayList, Aerolinea)
+comment3.target=java.lang.String getMatricula()
+comment4.target=java.lang.String getModelo()
+comment5.params=modelo
+comment5.target=void setModelo(java.lang.String)
+comment6.target=java.lang.String getColor()
+comment7.params=color
+comment7.target=void setColor(java.lang.String)
+comment8.target=int getCapacidad()
+comment9.target=int getAsientosPrioritarios()
+numComments=20

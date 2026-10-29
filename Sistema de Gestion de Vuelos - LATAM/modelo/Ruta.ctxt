@@ -1,0 +1,22 @@
+#BlueJ class context
+#Thu Oct 29 17:44:30 COT 2026
+comment0.target=Ruta
+comment1.target=Ruta()
+comment10.target=boolean esValida()
+comment11.params=precioBase
+comment11.target=boolean precioBaseValido(int)
+comment12.params=vuelo
+comment12.target=void agregarVuelo(Vuelo)
+comment13.target=java.lang.String toString()
+comment2.params=duracionEstimada topeTarifario vuelos ciudadSalida ciudadLlegada
+comment2.target=Ruta(int, int, java.util.ArrayList, Ciudad, Ciudad)
+comment3.target=int getDuracionEstimada()
+comment4.params=duracionEstimada
+comment4.target=void setDuracionEstimada(int)
+comment5.target=int getTopeTarifario()
+comment6.params=topeTarifario
+comment6.target=void setTopeTarifario(int)
+comment7.target=java.util.ArrayList getVuelos()
+comment8.target=Ciudad getCiudadSalida()
+comment9.target=Ciudad getCiudadLlegada()
+numComments=14
