@@ -66,20 +66,22 @@ public class Ciudad {
     }
 
     public void habilitar() {
-        //Falta por implementar 
+        habilitada = true;
     }
 
     public void agregarRutaSalida(Ruta ruta) {
-        //Falta por implementar 
+        rutasSalida.add(ruta); 
     }
 
     public void agregarRutaLlegada(Ruta ruta) {
-        //Falta por implementar 
+        rutasLlegada.add(ruta);
     }
 
     public static boolean esCodigoValido(String codigo) {
-        //Falta por implementar 
-        return false;
+        if (codigo == null) {
+            return false;
+        }
+        return codigo.matches("[A-Za-z]{3}");
     }
 
     @Override

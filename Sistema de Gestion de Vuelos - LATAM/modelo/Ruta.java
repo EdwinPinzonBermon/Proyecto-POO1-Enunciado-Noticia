@@ -50,17 +50,24 @@ public class Ruta {
     }
 
     public boolean esValida() {
-        //Falta por implementar 
-        return false;
+        if (ciudadSalida == null || ciudadLlegada == null) {
+            return false;
+        }
+        if (ciudadSalida.getCodigo().equals(ciudadLlegada.getCodigo())) {
+            return false;
+        }
+        if (!ciudadSalida.isHabilitada() || !ciudadLlegada.isHabilitada()) {
+            return false;
+        }
+        return duracionEstimada > 0 && topeTarifario > 0;
     }
 
     public boolean precioBaseValido(int precioBase) {
-        //Falta por implementar 
-        return false;
+        return precioBase > 0 && precioBase <= topeTarifario;
     }
 
     public void agregarVuelo(Vuelo vuelo) {
-        //Falta por implementar 
+        vuelos.add(vuelo);
     }
 
     @Override

@@ -49,8 +49,7 @@ public abstract class Pasaje {
     }
 
     public boolean estaCancelado() {
-        //Falta por implementar 
-        return false;
+        return estado == EstadoPasaje.CANCELADO;
     }
 
     @Override

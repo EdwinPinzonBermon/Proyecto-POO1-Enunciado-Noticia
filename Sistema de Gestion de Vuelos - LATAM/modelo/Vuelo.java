@@ -86,38 +86,39 @@ public class Vuelo {
     }
 
     public boolean salidaNoEsAnteriorA(FechaHora momento) {
-        //Falta por implementar 
-        return false;
+        return !getFechaHoraSalida().esAnteriorA(momento);
     }
 
     public int calcularDuracion() {
-        //Falta por implementar 
-        return 0;
+        return ruta.getDuracionEstimada();
     }
 
     public FechaHora calcularFechaHoraLlegada() {
-        //Falta por implementar 
-        return null;
+        return getFechaHoraSalida().sumarMinutos(calcularDuracion());
     }
 
     public boolean estaActivo() {
-        //Falta por implementar 
-        return false;
+        return estadoVuelo != EstadoVuelo.EN_EL_DESTINO;
     }
 
     public boolean admiteVentas() {
-        //Falta por implementar 
-        return false;
+        return estadoVuelo == EstadoVuelo.DISPONIBLE || estadoVuelo == EstadoVuelo.ABORDANDO;
     }
 
     public int contarTripulantesPorRol(Rol rol) {
-        //Falta por implementar 
-        return 0;
+        int cantidad = 0;
+        for (int i = 0; i < tripulantes.size(); i++) {
+            if (tripulantes.get(i).getRol() == rol) {
+                cantidad++;
+            }
+        }
+        return cantidad;
     }
 
     public boolean tripulacionCompleta() {
-        //Falta por implementar 
-        return false;
+        return contarTripulantesPorRol(Rol.CAPITAN) == 1
+            && contarTripulantesPorRol(Rol.COPILOTO) == 1
+            && contarTripulantesPorRol(Rol.AZAFATA) >= 1;
     }
 
     public boolean puedeDespegar() {
@@ -136,63 +137,131 @@ public class Vuelo {
     }
 
     public boolean asignarAvion(Avion avion) {
-        //Falta por implementar 
-        return false;
+        if (avion == null || haDespegado()) {
+            return false;
+        }
+        if (!avion.estaLibre()) {
+            return false;
+        }
+        if (!avion.cubreCapacidadYPrioritarios(capacidad, contarPasajesPrioritarios())) {
+            return false;
+        }
+        avion.asignarAVuelo(this);
+        if (this.avion != null) {
+            this.avion.getVuelos().remove(this);
+        }
+        this.avion = avion;
+        return true;
     }
 
     public boolean agregarTripulante(Tripulante tripulante) {
-        //Falta por implementar 
-        return false;
+        if (tripulante == null || haDespegado() || tripulantes.contains(tripulante)) {
+            return false;
+        }
+        if (tripulante.getRol() == Rol.CAPITAN && contarTripulantesPorRol(Rol.CAPITAN) == 1) {
+            return false;
+        }
+        if (tripulante.getRol() == Rol.COPILOTO && contarTripulantesPorRol(Rol.COPILOTO) == 1) {
+            return false;
+        }
+        if (!tripulante.asignarAVuelo(this)) {
+            return false;
+        }
+        tripulantes.add(tripulante);
+        return true;
     }
 
     public boolean agregarPasaje(Pasaje pasaje) {
-        //Falta por implementar 
-        return false;
+        if (pasaje == null || !admiteVentas()) {
+            return false;
+        }
+        if (pasaje.getNumeroAsiento() < 1 || pasaje.getNumeroAsiento() > capacidad) {
+            return false;
+        }
+        if (asientoOcupado(pasaje.getNumeroAsiento())) {
+            return false;
+        }
+        if (pasaje.getPasajero().tienePasajeNoCancelado(this)) {
+            return false;
+        }
+        if (!ruta.precioBaseValido(pasaje.getPrecioBase())) {
+            return false;
+        }
+        if (pasaje.getClase() == ClasePasaje.PRIORITARIA) {
+            if (avion == null || contarPasajesPrioritarios() >= avion.getAsientosPrioritarios()) {
+                return false;
+            }
+        }
+        pasajes.add(pasaje);
+        return true;
     }
 
     public boolean asientoOcupado(int numeroAsiento) {
-        //Falta por implementar 
-        return false;
+        return buscarPasajePorAsiento(numeroAsiento) != null;
     }
 
     public Pasaje buscarPasajePorAsiento(int numeroAsiento) {
-        //Falta por implementar 
+        for (int i = 0; i < pasajes.size(); i++) {
+            Pasaje pasaje = pasajes.get(i);
+            if (pasaje.getNumeroAsiento() == numeroAsiento && !pasaje.estaCancelado()) {
+                return pasaje;
+            }
+        }
         return null;
     }
 
     public int contarPasajesNoCancelados() {
-        //Falta por implementar 
-        return 0;
+        int cantidad = 0;
+        for (int i = 0; i < pasajes.size(); i++) {
+            if (!pasajes.get(i).estaCancelado()) {
+                cantidad++;
+            }
+        }
+        return cantidad;
     }
 
     public int contarPasajesPrioritarios() {
-        //Falta por implementar 
-        return 0;
+        int cantidad = 0;
+        for (int i = 0; i < pasajes.size(); i++) {
+            Pasaje pasaje = pasajes.get(i);
+            if (!pasaje.estaCancelado() && pasaje.getClase() == ClasePasaje.PRIORITARIA) {
+                cantidad++;
+            }
+        }
+        return cantidad;
     }
 
     public int asientosLibres() {
-        //Falta por implementar 
-        return 0;
+        return capacidad - contarPasajesNoCancelados();
     }
 
     public int calcularOcupacion() {
-        //Falta por implementar 
-        return 0;
+        if (capacidad <= 0) {
+            return 0;
+        }
+        return contarPasajesNoCancelados() * 100 / capacidad;
     }
 
     public int calcularIngresoConfirmado() {
-        //Falta por implementar 
-        return 0;
+        int ingreso = 0;
+        for (int i = 0; i < pasajes.size(); i++) {
+            Pasaje pasaje = pasajes.get(i);
+            if (!pasaje.estaCancelado()) {
+                ingreso += pasaje.calcularPrecioFinal();
+            }
+        }
+        return ingreso;
     }
 
     private boolean haDespegado() {
-        //Falta por implementar 
-        return false;
+        return estadoVuelo.ordinal() >= EstadoVuelo.DESPEGUE.ordinal();
     }
 
     public static boolean esCodigoValido(String codigo) {
-        //Falta por implementar 
-        return false;
+        if (codigo == null) {
+            return false;
+        }
+        return codigo.matches("VUE-[0-9]{3}");
     }
 
     @Override

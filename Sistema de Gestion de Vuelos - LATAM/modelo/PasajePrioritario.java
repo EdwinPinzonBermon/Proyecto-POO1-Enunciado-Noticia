@@ -17,14 +17,12 @@ public class PasajePrioritario extends Pasaje {
     }
 
     public int calcularRecargo() {
-        //Falta por implementar 
-        return 0;
+        return precioBase * PORCENTAJE_RECARGO / 100;
     }
 
     @Override
     public int calcularPrecioFinal() {
-        //Falta por implementar 
-        return 0;
+        return precioBase + calcularRecargo();
     }
 
     @Override

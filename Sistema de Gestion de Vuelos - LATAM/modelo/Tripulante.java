@@ -38,18 +38,24 @@ public class Tripulante extends Persona {
     }
 
     public boolean estaLibre() {
-        //Falta por implementar 
-        return false;
+        return !tieneVueloActivo();
     }
 
     public boolean tieneVueloActivo() {
-        //Falta por implementar 
+        for (int i = 0; i < vuelos.size(); i++) {
+            if (vuelos.get(i).estaActivo()) {
+                return true;
+            }
+        }
         return false;
     }
 
     public boolean asignarAVuelo(Vuelo vuelo) {
-        //Falta por implementar 
-        return false;
+        if (vuelo == null || tieneVueloActivo()) {
+            return false;
+        }
+        vuelos.add(vuelo);
+        return true;
     }
 
     @Override

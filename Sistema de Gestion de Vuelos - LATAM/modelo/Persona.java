@@ -26,8 +26,15 @@ public abstract class Persona {
     }
 
     public static boolean esIdValido(String id) {
-        //Falta por implementar 
-        return false;
+        if (id == null || id.length() == 0) {
+            return false;
+        }
+        for (int i = 0; i < id.length(); i++) {
+            if (!Character.isDigit(id.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

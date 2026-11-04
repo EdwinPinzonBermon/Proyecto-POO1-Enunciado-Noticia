@@ -30,13 +30,14 @@ public class Hora {
     }
 
     public boolean esValida() {
-        //Falta por implementar 
-        return false;
+        return hora >= 0 && hora <= 23 && minuto >= 0 && minuto <= 59;
     }
 
     public boolean esAnteriorA(Hora otra) {
-        //Falta por implementar 
-        return false;
+        if (hora != otra.hora) {
+            return hora < otra.hora;
+        }
+        return minuto < otra.minuto;
     }
 
     @Override

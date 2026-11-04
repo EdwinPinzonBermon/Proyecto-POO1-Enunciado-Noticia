@@ -1,4 +1,4 @@
-
+import controlador.Control;
 /**
  * Write a description of class Main here.
  * 
@@ -7,4 +7,7 @@
  */
 public class Main
 {
+    public static void main(String[] args) {
+        new Control();
+    }
 }

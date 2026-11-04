@@ -40,13 +40,31 @@ public class Fecha {
     }
 
     public boolean esValida() {
-        //Falta por implementar 
-        return false;
+        if (anio < 1 || mes < 1 || mes > 12 || dia < 1) {
+            return false;
+        }
+        int diasDelMes = 31;
+        if (mes == 4 || mes == 6 || mes == 9 || mes == 11) {
+            diasDelMes = 30;
+        } else if (mes == 2) {
+            boolean bisiesto = (anio % 4 == 0 && anio % 100 != 0) || anio % 400 == 0;
+            if (bisiesto) {
+                diasDelMes = 29;
+            } else {
+                diasDelMes = 28;
+            }
+        }
+        return dia <= diasDelMes;
     }
 
     public boolean esAnteriorA(Fecha otra) {
-        //Falta por implementar 
-        return false;
+        if (anio != otra.anio) {
+            return anio < otra.anio;
+        }
+        if (mes != otra.mes) {
+            return mes < otra.mes;
+        }
+        return dia < otra.dia;
     }
 
     @Override

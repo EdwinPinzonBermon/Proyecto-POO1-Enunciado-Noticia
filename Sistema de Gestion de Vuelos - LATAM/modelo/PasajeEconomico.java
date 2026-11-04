@@ -16,8 +16,7 @@ public class PasajeEconomico extends Pasaje {
 
     @Override
     public int calcularPrecioFinal() {
-        //Falta por implementar 
-        return 0;
+        return precioBase;
     }
 
     @Override

@@ -33,12 +33,19 @@ public class Pais {
     }
 
     public boolean agregarCiudad(Ciudad ciudad) {
-        //Falta por implementar 
-        return false;
+        if (ciudad == null || buscarCiudad(ciudad.getCodigo()) != null) {
+            return false;
+        }
+        ciudades.add(ciudad);
+        return true;
     }
 
     public Ciudad buscarCiudad(String codigo) {
-        //Falta por implementar 
+        for (int i = 0; i < ciudades.size(); i++) {
+            if (ciudades.get(i).getCodigo().equalsIgnoreCase(codigo)) {
+                return ciudades.get(i);
+            }
+        }
         return null;
     }
 

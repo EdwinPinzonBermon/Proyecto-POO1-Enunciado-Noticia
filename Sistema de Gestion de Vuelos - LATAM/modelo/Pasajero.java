@@ -18,11 +18,16 @@ public class Pasajero extends Persona {
     }
 
     public void agregarPasaje(Pasaje pasaje) {
-        //Falta por implementar 
+        pasajes.add(pasaje);
     }
 
     public boolean tienePasajeNoCancelado(Vuelo vuelo) {
-        //Falta por implementar 
+        for (int i = 0; i < pasajes.size(); i++) {
+            Pasaje pasaje = pasajes.get(i);
+            if (pasaje.getVuelo() == vuelo && !pasaje.estaCancelado()) {
+                return true;
+            }
+        }
         return false;
     }
 

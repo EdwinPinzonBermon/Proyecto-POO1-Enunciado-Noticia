@@ -66,33 +66,39 @@ public class Avion {
     }
 
     public boolean estaLibre() {
-        //Falta por implementar 
-        return false;
+        return !tieneVueloActivo();
     }
 
     public boolean tieneVueloActivo() {
-        //Falta por implementar 
+        for (int i = 0; i < vuelos.size(); i++) {
+            if (vuelos.get(i).estaActivo()) {
+                return true;
+            }
+        }
         return false;
     }
 
     public boolean cubreCapacidad(int capacidadVuelo) {
-        //Falta por implementar 
-        return false;
+        return capacidad >= capacidadVuelo;
     }
 
     public boolean cubreCapacidadYPrioritarios(int capacidadVuelo, int prioritariosVuelo) {
-        //Falta por implementar 
-        return false;
+        return cubreCapacidad(capacidadVuelo) && asientosPrioritarios >= prioritariosVuelo;
     }
 
     public boolean asignarAVuelo(Vuelo vuelo) {
-        //Falta por implementar 
-        return false;
+        if (vuelo == null || !estaLibre()) {
+            return false;
+        }
+        vuelos.add(vuelo);
+        return true;
     }
 
     public static boolean esMatriculaValida(String matricula) {
-        //Falta por implementar 
-        return false;
+        if (matricula == null) {
+            return false;
+        }
+        return matricula.matches("HK-[0-9]{4}");
     }
 
     @Override
