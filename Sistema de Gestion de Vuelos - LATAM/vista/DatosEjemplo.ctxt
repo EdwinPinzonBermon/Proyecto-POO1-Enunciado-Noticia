@@ -1,0 +1,16 @@
+#BlueJ class context
+#Mon Nov 16 17:55:44 COT 2026
+comment0.target=DatosEjemplo
+comment1.params=aerolinea
+comment1.target=void cargar(modelo.Aerolinea)
+comment2.params=f dias
+comment2.target=modelo.Fecha sumarDias(modelo.Fecha, int)
+comment3.params=aerolinea pais codigo nombre
+comment3.target=modelo.Ciudad crearCiudad(modelo.Aerolinea, modelo.Pais, java.lang.String, java.lang.String)
+comment4.params=aerolinea id nombre rol codigoVuelo
+comment4.target=void registrarTripulante(modelo.Aerolinea, java.lang.String, java.lang.String, modelo.Rol, java.lang.String)
+comment5.params=aerolinea codigoVuelo id nombre asiento clase precioBase
+comment5.target=void venderPasaje(modelo.Aerolinea, java.lang.String, java.lang.String, java.lang.String, int, modelo.ClasePasaje, int)
+comment6.params=correcto que
+comment6.target=void exigir(boolean, java.lang.String)
+numComments=7

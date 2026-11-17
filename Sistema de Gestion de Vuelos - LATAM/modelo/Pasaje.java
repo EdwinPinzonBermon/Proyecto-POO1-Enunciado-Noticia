@@ -44,8 +44,11 @@ public abstract class Pasaje {
     public abstract int calcularPrecioFinal();
 
     public boolean cancelar() {
-        //Falta por implementar 
-        return false;
+        if (estado == EstadoPasaje.CANCELADO) {
+            return false;
+        }
+        estado = EstadoPasaje.CANCELADO;
+        return true;
     }
 
     public boolean estaCancelado() {
@@ -54,7 +57,6 @@ public abstract class Pasaje {
 
     @Override
     public String toString() {
-        //Falta por implementar 
-        return null;
+        return "Asiento: " + numeroAsiento + " - Precio Final: " + calcularPrecioFinal() + " - Clase: " + getClase() + " - Estado: " + estado;
     }
 }

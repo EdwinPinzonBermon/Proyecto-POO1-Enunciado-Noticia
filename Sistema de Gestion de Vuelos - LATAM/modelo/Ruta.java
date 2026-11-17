@@ -72,7 +72,6 @@ public class Ruta {
 
     @Override
     public String toString() {
-        //Falta por implementar 
-        return null;
+        return ciudadSalida.getNombre() + " - " + ciudadLlegada.getNombre() + " (" + duracionEstimada + " min)";
     }
 }

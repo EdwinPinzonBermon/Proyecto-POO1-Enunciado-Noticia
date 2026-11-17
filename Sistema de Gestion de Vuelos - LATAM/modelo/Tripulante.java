@@ -42,8 +42,8 @@ public class Tripulante extends Persona {
     }
 
     public boolean tieneVueloActivo() {
-        for (int i = 0; i < vuelos.size(); i++) {
-            if (vuelos.get(i).estaActivo()) {
+        for (Vuelo vuelo : vuelos) {
+            if (vuelo.estaActivo()) {
                 return true;
             }
         }
@@ -60,7 +60,6 @@ public class Tripulante extends Persona {
 
     @Override
     public String toString() {
-        //Falta por implementar 
-        return null;
+        return super.toString() + " - Rol: " + rol;
     }
 }

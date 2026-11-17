@@ -22,8 +22,7 @@ public class Pasajero extends Persona {
     }
 
     public boolean tienePasajeNoCancelado(Vuelo vuelo) {
-        for (int i = 0; i < pasajes.size(); i++) {
-            Pasaje pasaje = pasajes.get(i);
+        for (Pasaje pasaje : pasajes) {
             if (pasaje.getVuelo() == vuelo && !pasaje.estaCancelado()) {
                 return true;
             }
@@ -33,7 +32,6 @@ public class Pasajero extends Persona {
 
     @Override
     public String toString() {
-        //Falta por implementar 
-        return null;
+        return super.toString();
     }
 }

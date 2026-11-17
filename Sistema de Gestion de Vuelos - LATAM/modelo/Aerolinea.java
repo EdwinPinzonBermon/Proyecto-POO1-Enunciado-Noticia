@@ -99,8 +99,8 @@ public class Aerolinea {
         if (pais.getNombre() == null || pais.getNombre().trim().equals("")) {
             return false;
         }
-        for (int i = 0; i < paises.size(); i++) {
-            if (paises.get(i).getCodigo().equalsIgnoreCase(pais.getCodigo())) {
+        for (Pais p : paises) {
+            if (p.getCodigo().equalsIgnoreCase(pais.getCodigo())) {
                 return false;
             }
         }
@@ -273,36 +273,36 @@ public class Aerolinea {
     }
 
     public Vuelo buscarVuelo(String codigo) {
-        for (int i = 0; i < vuelos.size(); i++) {
-            if (vuelos.get(i).getCodigo().equalsIgnoreCase(codigo)) {
-                return vuelos.get(i);
+        for (Vuelo vuelo : vuelos) {
+            if (vuelo.getCodigo().equalsIgnoreCase(codigo)) {
+                return vuelo;
             }
         }
         return null;
     }
 
     public Avion buscarAvion(String matricula) {
-        for (int i = 0; i < aviones.size(); i++) {
-            if (aviones.get(i).getMatricula().equalsIgnoreCase(matricula)) {
-                return aviones.get(i);
+        for (Avion avion : aviones) {
+            if (avion.getMatricula().equalsIgnoreCase(matricula)) {
+                return avion;
             }
         }
         return null;
     }
 
     public Tripulante buscarTripulante(String id) {
-        for (int i = 0; i < tripulantes.size(); i++) {
-            if (tripulantes.get(i).getId().equals(id)) {
-                return tripulantes.get(i);
+        for (Tripulante tripulante : tripulantes) {
+            if (tripulante.getId().equals(id)) {
+                return tripulante;
             }
         }
         return null;
     }
 
     public Pasajero buscarPasajero(String id) {
-        for (int i = 0; i < pasajeros.size(); i++) {
-            if (pasajeros.get(i).getId().equals(id)) {
-                return pasajeros.get(i);
+        for (Pasajero pasajero : pasajeros) {
+            if (pasajero.getId().equals(id)) {
+                return pasajero;
             }
         }
         return null;
@@ -317,17 +317,16 @@ public class Aerolinea {
     }
 
     public Ciudad buscarCiudad(String codigo) {
-        for (int i = 0; i < ciudades.size(); i++) {
-            if (ciudades.get(i).getCodigo().equalsIgnoreCase(codigo)) {
-                return ciudades.get(i);
+        for (Ciudad ciudad : ciudades) {
+            if (ciudad.getCodigo().equalsIgnoreCase(codigo)) {
+                return ciudad;
             }
         }
         return null;
     }
 
     public Ruta buscarRuta(Ciudad salida, Ciudad llegada) {
-        for (int i = 0; i < rutas.size(); i++) {
-            Ruta ruta = rutas.get(i);
+        for (Ruta ruta : rutas) {
             if (ruta.getCiudadSalida().getCodigo().equals(salida.getCodigo())
                 && ruta.getCiudadLlegada().getCodigo().equals(llegada.getCodigo())) {
                 return ruta;
@@ -370,33 +369,64 @@ public class Aerolinea {
     }
 
     public boolean actualizarEstadoVuelo(String codigoVuelo) {
-        //Falta por implementar 
-        return false;
+        Vuelo vuelo = buscarVuelo(codigoVuelo);
+        if (vuelo == null) {
+            return false;
+        }
+        return vuelo.avanzarEstadoVuelo();
     }
 
     public boolean actualizarEstadoEmbarque(String codigoVuelo) {
-        //Falta por implementar 
-        return false;
+        Vuelo vuelo = buscarVuelo(codigoVuelo);
+        if (vuelo == null) {
+            return false;
+        }
+        return vuelo.avanzarEstadoEmbarque();
     }
 
     public boolean cancelarPasaje(String codigoVuelo, int numeroAsiento) {
-        //Falta por implementar 
-        return false;
+        Vuelo vuelo = buscarVuelo(codigoVuelo);
+        if (vuelo == null) {
+            return false;
+        }
+        if (vuelo.getEstadoVuelo() != EstadoVuelo.DISPONIBLE && vuelo.getEstadoVuelo() != EstadoVuelo.ABORDANDO) {
+            return false;
+        }
+        Pasaje pasaje = vuelo.buscarPasajePorAsiento(numeroAsiento);
+        if (pasaje == null) {
+            return false;
+        }
+        return pasaje.cancelar();
     }
 
     public ArrayList<Vuelo> filtrarVuelosPorSalida(Ciudad ciudad) {
-        //Falta por implementar 
-        return null;
+        ArrayList<Vuelo> resultado = new ArrayList<>();
+        for (Vuelo vuelo : vuelos) {
+            if (vuelo.getRuta().getCiudadSalida().getCodigo().equalsIgnoreCase(ciudad.getCodigo())) {
+                resultado.add(vuelo);
+            }
+        }
+        return resultado;
     }
 
     public ArrayList<Vuelo> filtrarVuelosPorLlegada(Ciudad ciudad) {
-        //Falta por implementar 
-        return null;
+        ArrayList<Vuelo> resultado = new ArrayList<>();
+        for (Vuelo vuelo : vuelos) {
+            if (vuelo.getRuta().getCiudadLlegada().getCodigo().equalsIgnoreCase(ciudad.getCodigo())) {
+                resultado.add(vuelo);
+            }
+        }
+        return resultado;
     }
 
     public ArrayList<Vuelo> filtrarVuelosPorAvion(Avion avion) {
-        //Falta por implementar 
-        return null;
+        ArrayList<Vuelo> resultado = new ArrayList<>();
+        for (Vuelo vuelo : vuelos) {
+            if (vuelo.getAvion() != null && vuelo.getAvion().getMatricula().equalsIgnoreCase(avion.getMatricula())) {
+                resultado.add(vuelo);
+            }
+        }
+        return resultado;
     }
 
     public int consultarAsientosLibres(String codigoVuelo) {
@@ -424,14 +454,26 @@ public class Aerolinea {
     }
 
     public ArrayList<Vuelo> vuelosMayorOcupacion() {
-        //Falta por implementar 
-        return null;
+        ArrayList<Vuelo> resultado = new ArrayList<>();
+        if (vuelos.isEmpty()) {
+            return resultado;
+        }
+        int maxOcupacion = -1;
+        for (Vuelo vuelo : vuelos) {
+            int ocupacion = vuelo.calcularOcupacion();
+            if (ocupacion > maxOcupacion) {
+                maxOcupacion = ocupacion;
+                resultado.clear();
+                resultado.add(vuelo);
+            } else if (ocupacion == maxOcupacion) {
+                resultado.add(vuelo);
+            }
+        }
+        return resultado;
     }
 
     @Override
     public String toString() {
-        //Falta por implementar 
-        return null;
+        return "Aerolinea: " + nombre;
     }
-
 }

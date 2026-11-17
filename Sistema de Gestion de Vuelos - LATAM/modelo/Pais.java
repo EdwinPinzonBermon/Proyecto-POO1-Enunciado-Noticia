@@ -41,9 +41,9 @@ public class Pais {
     }
 
     public Ciudad buscarCiudad(String codigo) {
-        for (int i = 0; i < ciudades.size(); i++) {
-            if (ciudades.get(i).getCodigo().equalsIgnoreCase(codigo)) {
-                return ciudades.get(i);
+        for (Ciudad ciudad : ciudades) {
+            if (ciudad.getCodigo().equalsIgnoreCase(codigo)) {
+                return ciudad;
             }
         }
         return null;
@@ -51,7 +51,6 @@ public class Pais {
 
     @Override
     public String toString() {
-        //Falta por implementar 
-        return null;
+        return "Pais: " + nombre + " (" + codigo + ")";
     }
 }

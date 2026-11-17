@@ -39,7 +39,6 @@ public abstract class Persona {
 
     @Override
     public String toString() {
-        //Falta por implementar 
-        return null;
+        return id + " - " + nombre;
     }
 }

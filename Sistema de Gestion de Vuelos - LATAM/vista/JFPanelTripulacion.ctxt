@@ -1,0 +1,22 @@
+#BlueJ class context
+#Mon Nov 16 17:55:44 COT 2026
+comment0.target=JFPanelTripulacion
+comment1.params=aerolinea
+comment1.target=JFPanelTripulacion(modelo.Aerolinea)
+comment10.target=javax.swing.JButton getBtnRegistrarTripulante()
+comment11.target=javax.swing.JComboBox getCmbVueloAsignar()
+comment12.target=javax.swing.JButton getBtnAsignarAVuelo()
+comment13.target=javax.swing.JComboBox getCmbFiltroEstado()
+comment14.target=javax.swing.JTable getTblTripulacion()
+comment15.target=javax.swing.table.DefaultTableModel getModeloTablaTripulacion()
+comment2.target=void crearFormulario()
+comment3.target=void crearTabla()
+comment4.params=row column
+comment4.target=boolean isCellEditable(int, int)
+comment5.params=t
+comment5.target=java.lang.String codigoVueloAsignado(modelo.Tripulante)
+comment6.target=void actualizarDatos()
+comment7.target=javax.swing.JTextField getTxtIdentificacion()
+comment8.target=javax.swing.JTextField getTxtNombreCompleto()
+comment9.target=javax.swing.JComboBox getCmbRol()
+numComments=16

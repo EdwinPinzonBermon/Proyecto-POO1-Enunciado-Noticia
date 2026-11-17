@@ -1,226 +1,348 @@
 package vista;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import modelo.*;
 
-public class JFVentanaPrincipal extends JFrame implements ActionListener
-{
+public class JFVentanaPrincipal extends JFrame {
+
+    // Colores de la interfaz
+    private Color colorMenu = new Color(28, 43, 75);
+    private Color colorMenuActivo = new Color(42, 63, 107);
+    private Color colorTextoMenu = new Color(226, 232, 240);
+    private Color colorTextoGrupo = new Color(148, 163, 184);
+    private Color colorFondo = new Color(243, 246, 251);
+
     private Aerolinea aerolinea;
 
-    // Encabezado
-    private JLabel lblLogo, lblTitulo, lblSubtitulo, lblDecoracion;
-
-    // Menu
-    private JButton btnVuelos, btnPasajes, btnPasajeros, btnAviones, btnTripulacion, btnRutas, btnOcupacion;
-
-    // Pantallas (se muestran una a la vez con el CardLayout)
+    // CardLayout = varias pantallas, solo una visible
     private CardLayout cardLayout;
-    private JPanel palContenido;
-    private JFPanelVuelos panelVuelos;
-    private JFPanelPasajes panelPasajes;
-    private JFPanelPasajeros panelPasajeros;
-    private JFPanelAviones panelAviones;
-    private JFPanelTripulacion panelTripulacion;
-    private JFPanelRutas panelRutas;
-    private JFPanelOcupacion panelOcupacion;
+    private JPanel pnlContenido;
+    private JPanel pnlSidebar;
+    private JPanel pnlMenuItems;
 
-    public JFVentanaPrincipal(Aerolinea aerolinea){
-        Utilidades.aplicarTema(); // colores del programa (antes de crear los componentes)
+    // true = menú con texto; false = menú solo con símbolo
+    private boolean menuAncho = true;
+
+    // Botones del menú (son JButton normales)
+    private JButton btnMenuPrincipal;
+    private JButton btnMenuRutas;
+    private JButton btnMenuAvionesVuelos;
+    private JButton btnMenuTripulacion;
+    private JButton btnMenuPasajes;
+    private JButton btnMenuOcupacion;
+
+    // Texto completo y símbolo de cada botón (para cambiar al estrechar el menú)
+    private String[] textosCompletos;
+    private String[] simbolos;
+
+    // Etiquetas de grupo (RESUMEN, CONFIGURACIÓN, etc.)
+    private JLabel lblGrupoResumen;
+    private JLabel lblGrupo1;
+    private JLabel lblGrupo2;
+    private JLabel lblGrupo3;
+
+    // Los 6 paneles de contenido
+    private JFPanelPrincipal pnlPrincipal;
+    private JFPanelRutas pnlRutas;
+    private JFPanelAvionesVuelos pnlAvionesVuelos;
+    private JFPanelTripulacion pnlTripulacion;
+    private JFPanelPasajes pnlPasajes;
+    private JFPanelOcupacion pnlOcupacion;
+
+    public JFVentanaPrincipal(Aerolinea aerolinea) {
         this.aerolinea = aerolinea;
-        setTitle("Sistema de Gestion de Vuelos - " + aerolinea.getNombre());
-        setLayout(new BorderLayout());
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        ImageIcon logo = Utilidades.cargarIcono("imagenes/logo.png");
-        if (logo != null) {
-            setIconImage(logo.getImage()); // icono de la ventana
-        }
-
-        add(panelEncabezado(), BorderLayout.NORTH);
-        add(panelMenu(), BorderLayout.WEST);
-        add(panelContenido(), BorderLayout.CENTER);
-        Utilidades.aplicarEstilo(palContenido); // botones azules en todas las pantallas
-
-        setSize(1150, 720);
+        setTitle(aerolinea.getNombre() + " - Gestión de Vuelos");
+        setSize(1280, 800);
+        setMinimumSize(new Dimension(1000, 650));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        mostrarPanel("vuelos");
-        setVisible(true);
+        setLayout(new BorderLayout());
+        getContentPane().setBackground(colorFondo);
+
+        crearComponentes();
+        conectarBotonesDelMenu();
+        mostrarPanel("PRINCIPAL");
     }
 
-    public JPanel panelEncabezado(){
-        JPanel palEncabezado = new JPanel(new BorderLayout(14, 0));
-        palEncabezado.setBackground(Utilidades.AZUL_OSCURO);
-        // linea celeste debajo del encabezado + margen interno
-        palEncabezado.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createMatteBorder(0, 0, 4, 0, Utilidades.ACENTO),
-            BorderFactory.createEmptyBorder(8, 14, 8, 14)));
-
-        // Logo a la izquierda
-        lblLogo = new JLabel(Utilidades.cargarIcono("imagenes/logo.png"));
-
-        // Titulo y subtitulo en el centro
-        JPanel palTextos = new JPanel(new GridLayout(2, 1));
-        palTextos.setOpaque(false);
-        lblTitulo = new JLabel("LATAM Airlines Colombia");
-        lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 26));
-        lblTitulo.setForeground(Color.WHITE);
-        lblSubtitulo = new JLabel("Sistema de gestion de vuelos");
-        lblSubtitulo.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        lblSubtitulo.setForeground(Utilidades.CELESTE_OSCURO);
-        palTextos.add(lblTitulo);
-        palTextos.add(lblSubtitulo);
-
-        // Dibujo de nubes y avion a la derecha
-        lblDecoracion = new JLabel(Utilidades.cargarIcono("imagenes/decoracion.png"));
-
-        palEncabezado.add(lblLogo, BorderLayout.WEST);
-        palEncabezado.add(palTextos, BorderLayout.CENTER);
-        palEncabezado.add(lblDecoracion, BorderLayout.EAST);
-        return palEncabezado;
+    // =========================================================================
+    // CREAR TODA LA INTERFAZ
+    // =========================================================================
+    private void crearComponentes() {
+        crearBarraSuperior();
+        crearMenuLateral();
+        crearContenidoCentral();
     }
 
-    public JPanel panelMenu(){
-        JPanel palMenu = new JPanel();
-        palMenu.setLayout(new GridLayout(7, 1, 0, 2));
-        palMenu.setBackground(Utilidades.AZUL_OSCURO);
+    // ----- BARRA SUPERIOR (norte) -----
+    private void crearBarraSuperior() {
+        JPanel barraArriba = new JPanel(new BorderLayout());
+        barraArriba.setBackground(Color.WHITE);
+        barraArriba.setBorder(BorderFactory.createEmptyBorder(8, 12, 8, 16));
+        barraArriba.setPreferredSize(new Dimension(0, 52));
 
-        btnVuelos = crearBotonMenu("Vuelos", "imagenes/icono_vuelos.png");
-        btnPasajes = crearBotonMenu("Pasajes", "imagenes/icono_pasajes.png");
-        btnPasajeros = crearBotonMenu("Pasajeros", "imagenes/icono_pasajeros.png");
-        btnAviones = crearBotonMenu("Aviones", "imagenes/icono_aviones.png");
-        btnTripulacion = crearBotonMenu("Tripulacion", "imagenes/icono_tripulacion.png");
-        btnRutas = crearBotonMenu("Ciudades y rutas", "imagenes/icono_rutas.png");
-        btnOcupacion = crearBotonMenu("Ocupacion e ingresos", "imagenes/icono_ocupacion.png");
+        // Parte izquierda: botón ☰ + nombre
+        JPanel izquierda = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
+        izquierda.setOpaque(false);
 
-        palMenu.add(btnVuelos);
-        palMenu.add(btnPasajes);
-        palMenu.add(btnPasajeros);
-        palMenu.add(btnAviones);
-        palMenu.add(btnTripulacion);
-        palMenu.add(btnRutas);
-        palMenu.add(btnOcupacion);
+        JButton btnMenu = new JButton("☰");
+        btnMenu.setFont(new Font("SansSerif", Font.BOLD, 18));
+        btnMenu.setFocusPainted(false);
+        btnMenu.setBorderPainted(false);
+        btnMenu.setContentAreaFilled(false);
+        btnMenu.setForeground(colorMenu);
+        btnMenu.addActionListener(e -> cambiarAnchoDelMenu());
+        izquierda.add(btnMenu);
 
-        JLabel lblPie = new JLabel("Panel del administrador", SwingConstants.CENTER);
-        lblPie.setForeground(Utilidades.CELESTE_OSCURO);
-        lblPie.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        JLabel lblTitulo = new JLabel(aerolinea.getNombre());
+        lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 16));
+        lblTitulo.setForeground(colorMenu);
+        izquierda.add(lblTitulo);
 
-        // Este panel evita que los botones se estiren por toda la altura
-        JPanel palIzquierdo = new JPanel(new BorderLayout());
-        palIzquierdo.setBackground(Utilidades.AZUL_OSCURO);
-        palIzquierdo.setBorder(BorderFactory.createEmptyBorder(14, 8, 0, 8));
-        palIzquierdo.setPreferredSize(new Dimension(230, 0));
-        palIzquierdo.add(palMenu, BorderLayout.NORTH);
-        palIzquierdo.add(lblPie, BorderLayout.SOUTH);
-        return palIzquierdo;
+        barraArriba.add(izquierda, BorderLayout.WEST);
+
+        // Parte derecha: etiqueta "Admin"
+        JLabel lblAdmin = new JLabel("  Admin  ");
+        lblAdmin.setOpaque(true);
+        lblAdmin.setBackground(colorMenu);
+        lblAdmin.setForeground(Color.WHITE);
+        lblAdmin.setFont(new Font("SansSerif", Font.BOLD, 12));
+
+        JPanel derecha = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 4));
+        derecha.setOpaque(false);
+        derecha.add(lblAdmin);
+        barraArriba.add(derecha, BorderLayout.EAST);
+
+        add(barraArriba, BorderLayout.NORTH);
     }
 
-    // Crea un boton del menu con su icono (si la imagen no existe, el boton queda solo con texto)
-    private JButton crearBotonMenu(String texto, String rutaIcono){
-        JButton boton = new JButton(texto, Utilidades.cargarIcono(rutaIcono));
+    // ----- MENÚ LATERAL (oeste) -----
+    private void crearMenuLateral() {
+        pnlSidebar = new JPanel(new BorderLayout());
+        pnlSidebar.setBackground(colorMenu);
+        pnlSidebar.setPreferredSize(new Dimension(240, 0));
+
+        pnlMenuItems = new JPanel();
+        pnlMenuItems.setLayout(new BoxLayout(pnlMenuItems, BoxLayout.Y_AXIS));
+        pnlMenuItems.setOpaque(false);
+        pnlMenuItems.setBorder(BorderFactory.createEmptyBorder(16, 8, 16, 8));
+
+        // Textos y símbolos de cada botón
+        textosCompletos = new String[]{
+            "■  Panel Principal",
+            "●  Rutas y Ciudades",
+            "✈  Aviones y Vuelos",
+            "☺  Tripulación",
+            "▤  Pasajes y Asientos",
+            "▦  Ocupación e Ingresos"
+        };
+        simbolos = new String[]{"■", "●", "✈", "☺", "▤", "▦"};
+
+        // Crear los 6 botones como JButton normales
+        btnMenuPrincipal      = crearBotonMenu(textosCompletos[0]);
+        btnMenuRutas          = crearBotonMenu(textosCompletos[1]);
+        btnMenuAvionesVuelos  = crearBotonMenu(textosCompletos[2]);
+        btnMenuTripulacion    = crearBotonMenu(textosCompletos[3]);
+        btnMenuPasajes        = crearBotonMenu(textosCompletos[4]);
+        btnMenuOcupacion      = crearBotonMenu(textosCompletos[5]);
+
+        // Etiquetas de grupo
+        lblGrupoResumen = crearEtiquetaGrupo("RESUMEN");
+        lblGrupo1 = crearEtiquetaGrupo("1 · CONFIGURACIÓN BASE");
+        lblGrupo2 = crearEtiquetaGrupo("2 · FLOTA Y OPERACIÓN");
+        lblGrupo3 = crearEtiquetaGrupo("3 · VENTAS Y MÉTRICAS");
+
+        // Orden de los elementos en el menú
+        pnlMenuItems.add(lblGrupoResumen);
+        pnlMenuItems.add(btnMenuPrincipal);
+        pnlMenuItems.add(lblGrupo1);
+        pnlMenuItems.add(btnMenuRutas);
+        pnlMenuItems.add(lblGrupo2);
+        pnlMenuItems.add(btnMenuAvionesVuelos);
+        pnlMenuItems.add(Box.createRigidArea(new Dimension(0, 2)));
+        pnlMenuItems.add(btnMenuTripulacion);
+        pnlMenuItems.add(lblGrupo3);
+        pnlMenuItems.add(btnMenuPasajes);
+        pnlMenuItems.add(Box.createRigidArea(new Dimension(0, 2)));
+        pnlMenuItems.add(btnMenuOcupacion);
+
+        pnlSidebar.add(pnlMenuItems, BorderLayout.NORTH);
+        add(pnlSidebar, BorderLayout.WEST);
+    }
+
+    
+    private JButton crearBotonMenu(String texto) {
+        JButton boton = new JButton(texto);
+        boton.setFont(new Font("SansSerif", Font.BOLD, 13));
+        boton.setForeground(colorTextoMenu);
         boton.setHorizontalAlignment(SwingConstants.LEFT);
-        boton.setIconTextGap(14);
-        boton.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        boton.setForeground(Color.WHITE);
-        boton.setBackground(Utilidades.AZUL_OSCURO);
-        boton.setOpaque(true);
-        boton.setBorder(BorderFactory.createEmptyBorder(11, 14, 11, 14));
+        boton.setBorder(BorderFactory.createEmptyBorder(0, 12, 0, 8));
         boton.setFocusPainted(false);
-        boton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        boton.addActionListener(this);
+        boton.setContentAreaFilled(false);
+        boton.setOpaque(false);
+        boton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        boton.setPreferredSize(new Dimension(224, 42));
+        boton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 42));
         return boton;
     }
 
-    public JPanel panelContenido(){
+    
+    private JLabel crearEtiquetaGrupo(String texto) {
+        JLabel lbl = new JLabel(texto);
+        lbl.setFont(new Font("SansSerif", Font.BOLD, 10));
+        lbl.setForeground(colorTextoGrupo);
+        lbl.setAlignmentX(Component.LEFT_ALIGNMENT);
+        lbl.setBorder(BorderFactory.createEmptyBorder(14, 10, 4, 0));
+        return lbl;
+    }
+
+    // ----- CONTENIDO CENTRAL (CardLayout) -----
+    private void crearContenidoCentral() {
         cardLayout = new CardLayout();
-        palContenido = new JPanel(cardLayout);
-        palContenido.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        pnlContenido = new JPanel(cardLayout);
+        pnlContenido.setBackground(colorFondo);
 
-        panelVuelos = new JFPanelVuelos(aerolinea);
-        panelPasajes = new JFPanelPasajes(aerolinea);
-        panelPasajeros = new JFPanelPasajeros(aerolinea);
-        panelAviones = new JFPanelAviones(aerolinea);
-        panelTripulacion = new JFPanelTripulacion(aerolinea);
-        panelRutas = new JFPanelRutas(aerolinea);
-        panelOcupacion = new JFPanelOcupacion(aerolinea);
+        // Se crean los 6 paneles
+        pnlPrincipal     = new JFPanelPrincipal(aerolinea);
+        pnlRutas         = new JFPanelRutas(aerolinea);
+        pnlAvionesVuelos = new JFPanelAvionesVuelos(aerolinea);
+        pnlTripulacion   = new JFPanelTripulacion(aerolinea);
+        pnlPasajes       = new JFPanelPasajes(aerolinea);
+        pnlOcupacion     = new JFPanelOcupacion(aerolinea);
 
-        palContenido.add(panelVuelos, "vuelos");
-        palContenido.add(panelPasajes, "pasajes");
-        palContenido.add(panelPasajeros, "pasajeros");
-        palContenido.add(panelAviones, "aviones");
-        palContenido.add(panelTripulacion, "tripulacion");
-        palContenido.add(panelRutas, "rutas");
-        palContenido.add(panelOcupacion, "ocupacion");
-        return palContenido;
+        // Se agregan al CardLayout con un nombre (clave)
+        pnlContenido.add(pnlPrincipal,     "PRINCIPAL");
+        pnlContenido.add(pnlRutas,         "RUTAS");
+        pnlContenido.add(pnlAvionesVuelos, "AVIONES_VUELOS");
+        pnlContenido.add(pnlTripulacion,   "TRIPULACION");
+        pnlContenido.add(pnlPasajes,       "PASAJES");
+        pnlContenido.add(pnlOcupacion,     "OCUPACION");
+
+        add(pnlContenido, BorderLayout.CENTER);
     }
 
-    // Antes de mostrar una pantalla se recargan sus datos desde el modelo
-    private void mostrarPanel(String nombre){
-        String seccion = "";
-        JButton botonActivo = btnVuelos;
-        if (nombre.equals("vuelos")) {
-            panelVuelos.actualizar();
-            seccion = "Vuelos";
-            botonActivo = btnVuelos;
-        } else if (nombre.equals("pasajes")) {
-            panelPasajes.actualizar();
-            seccion = "Pasajes";
-            botonActivo = btnPasajes;
-        } else if (nombre.equals("pasajeros")) {
-            panelPasajeros.actualizar();
-            seccion = "Pasajeros";
-            botonActivo = btnPasajeros;
-        } else if (nombre.equals("aviones")) {
-            panelAviones.actualizar();
-            seccion = "Aviones";
-            botonActivo = btnAviones;
-        } else if (nombre.equals("tripulacion")) {
-            panelTripulacion.actualizar();
-            seccion = "Tripulacion";
-            botonActivo = btnTripulacion;
-        } else if (nombre.equals("rutas")) {
-            panelRutas.actualizar();
-            seccion = "Ciudades y rutas";
-            botonActivo = btnRutas;
-        } else if (nombre.equals("ocupacion")) {
-            panelOcupacion.actualizar();
-            seccion = "Ocupacion e ingresos";
-            botonActivo = btnOcupacion;
+    // =========================================================================
+    // COMPORTAMIENTO DEL MENÚ
+    // =========================================================================
+
+    private void conectarBotonesDelMenu() {
+        btnMenuPrincipal.addActionListener(e -> mostrarPanel("PRINCIPAL"));
+        btnMenuRutas.addActionListener(e -> mostrarPanel("RUTAS"));
+        btnMenuAvionesVuelos.addActionListener(e -> mostrarPanel("AVIONES_VUELOS"));
+        btnMenuTripulacion.addActionListener(e -> mostrarPanel("TRIPULACION"));
+        btnMenuPasajes.addActionListener(e -> mostrarPanel("PASAJES"));
+        btnMenuOcupacion.addActionListener(e -> mostrarPanel("OCUPACION"));
+    }
+
+    
+    private void cambiarAnchoDelMenu() {
+        menuAncho = !menuAncho;
+
+        if (menuAncho) {
+            pnlSidebar.setPreferredSize(new Dimension(240, 0));
+        } else {
+            pnlSidebar.setPreferredSize(new Dimension(64, 0));
         }
-        cardLayout.show(palContenido, nombre);
-        lblSubtitulo.setText("Sistema de gestion de vuelos   |   " + seccion);
-        marcarBoton(botonActivo);
+
+        // Actualizar el texto de cada botón
+        actualizarTextoBoton(btnMenuPrincipal,     0);
+        actualizarTextoBoton(btnMenuRutas,         1);
+        actualizarTextoBoton(btnMenuAvionesVuelos, 2);
+        actualizarTextoBoton(btnMenuTripulacion,   3);
+        actualizarTextoBoton(btnMenuPasajes,       4);
+        actualizarTextoBoton(btnMenuOcupacion,     5);
+
+        // Las etiquetas de grupo solo se ven cuando el menú está ancho
+        lblGrupoResumen.setVisible(menuAncho);
+        lblGrupo1.setVisible(menuAncho);
+        lblGrupo2.setVisible(menuAncho);
+        lblGrupo3.setVisible(menuAncho);
+
+        pnlSidebar.revalidate();
+        pnlSidebar.repaint();
     }
 
-    // Pinta el boton de la seccion actual con un azul mas claro
-    private void marcarBoton(JButton activo){
-        JButton[] botones = {btnVuelos, btnPasajes, btnPasajeros, btnAviones, btnTripulacion, btnRutas, btnOcupacion};
-        for (int i = 0; i < botones.length; i++) {
-            if (botones[i] == activo) {
-                botones[i].setBackground(Utilidades.AZUL_MEDIO);
-            } else {
-                botones[i].setBackground(Utilidades.AZUL_OSCURO);
-            }
+    
+    private void actualizarTextoBoton(JButton boton, int indice) {
+        if (menuAncho) {
+            boton.setText(textosCompletos[indice]);
+            boton.setHorizontalAlignment(SwingConstants.LEFT);
+            boton.setPreferredSize(new Dimension(224, 42));
+        } else {
+            boton.setText(simbolos[indice]);
+            boton.setHorizontalAlignment(SwingConstants.CENTER);
+            boton.setPreferredSize(new Dimension(52, 42));
+        }
+        boton.revalidate();
+    }
+
+    
+    private void marcarBotonActivo(JButton boton, boolean activo) {
+        if (activo) {
+            boton.setOpaque(true);
+            boton.setBackground(colorMenuActivo);
+        } else {
+            boton.setOpaque(false);
+        }
+        boton.repaint();
+    }
+
+    
+    public void mostrarPanel(String nombre) {
+        cardLayout.show(pnlContenido, nombre);
+
+        // Todos inactivos primero
+        marcarBotonActivo(btnMenuPrincipal,     false);
+        marcarBotonActivo(btnMenuRutas,         false);
+        marcarBotonActivo(btnMenuAvionesVuelos, false);
+        marcarBotonActivo(btnMenuTripulacion,   false);
+        marcarBotonActivo(btnMenuPasajes,       false);
+        marcarBotonActivo(btnMenuOcupacion,     false);
+
+        // Activar el que corresponde y refrescar sus datos
+        if (nombre.equals("PRINCIPAL")) {
+            marcarBotonActivo(btnMenuPrincipal, true);
+            pnlPrincipal.actualizarDatos();
+        } else if (nombre.equals("RUTAS")) {
+            marcarBotonActivo(btnMenuRutas, true);
+            pnlRutas.actualizarDatos();
+        } else if (nombre.equals("AVIONES_VUELOS")) {
+            marcarBotonActivo(btnMenuAvionesVuelos, true);
+            pnlAvionesVuelos.actualizarDatos();
+        } else if (nombre.equals("TRIPULACION")) {
+            marcarBotonActivo(btnMenuTripulacion, true);
+            pnlTripulacion.actualizarDatos();
+        } else if (nombre.equals("PASAJES")) {
+            marcarBotonActivo(btnMenuPasajes, true);
+            pnlPasajes.actualizarDatos();
+        } else if (nombre.equals("OCUPACION")) {
+            marcarBotonActivo(btnMenuOcupacion, true);
+            pnlOcupacion.actualizarDatos();
         }
     }
 
-    // ---------------- Eventos ----------------
-
-    public void actionPerformed(ActionEvent e){
-        if (e.getSource() == btnVuelos) {
-            mostrarPanel("vuelos");
-        } else if (e.getSource() == btnPasajes) {
-            mostrarPanel("pasajes");
-        } else if (e.getSource() == btnPasajeros) {
-            mostrarPanel("pasajeros");
-        } else if (e.getSource() == btnAviones) {
-            mostrarPanel("aviones");
-        } else if (e.getSource() == btnTripulacion) {
-            mostrarPanel("tripulacion");
-        } else if (e.getSource() == btnRutas) {
-            mostrarPanel("rutas");
-        } else if (e.getSource() == btnOcupacion) {
-            mostrarPanel("ocupacion");
+    
+    public void actualizarKpis() {
+        if (pnlPrincipal != null) {
+            pnlPrincipal.actualizarDatos();
         }
     }
+
+    // --- Getters para el controlador ---
+    // Getters para el controlador
+    // TODO [Controlador]: conectar estos componentes en Control.java
+    public JButton getBtnMenuPrincipal() { return btnMenuPrincipal; }
+    public JButton getBtnMenuRutas() { return btnMenuRutas; }
+    public JButton getBtnMenuAvionesVuelos() { return btnMenuAvionesVuelos; }
+    public JButton getBtnMenuTripulacion() { return btnMenuTripulacion; }
+    public JButton getBtnMenuPasajes() { return btnMenuPasajes; }
+    public JButton getBtnMenuOcupacion() { return btnMenuOcupacion; }
+
+    public JFPanelPrincipal getPnlPrincipal() { return pnlPrincipal; }
+    public JFPanelRutas getPnlRutas() { return pnlRutas; }
+    public JFPanelAvionesVuelos getPnlAvionesVuelos() { return pnlAvionesVuelos; }
+    public JFPanelTripulacion getPnlTripulacion() { return pnlTripulacion; }
+    public JFPanelPasajes getPnlPasajes() { return pnlPasajes; }
+    public JFPanelOcupacion getPnlOcupacion() { return pnlOcupacion; }
 }

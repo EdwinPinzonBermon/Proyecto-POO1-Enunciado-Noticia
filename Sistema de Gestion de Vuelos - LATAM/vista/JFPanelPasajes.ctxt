@@ -1,0 +1,36 @@
+#BlueJ class context
+#Mon Nov 16 17:55:44 COT 2026
+comment0.target=JFPanelPasajes
+comment1.params=aerolinea
+comment1.target=JFPanelPasajes(modelo.Aerolinea)
+comment10.params=p
+comment10.target=void mostrarHistorialPasajero(modelo.Pasajero)
+comment11.params=row column
+comment11.target=boolean isCellEditable(int, int)
+comment12.target=javax.swing.JComboBox getCmbVueloSeleccionado()
+comment13.target=javax.swing.JLabel getLblInfoTopeVuelo()
+comment14.target=javax.swing.JTextField getTxtIdPasajero()
+comment15.target=javax.swing.JTextField getTxtNombrePasajero()
+comment16.target=javax.swing.JTextField getTxtNumeroAsiento()
+comment17.target=javax.swing.JComboBox getCmbClasePasaje()
+comment18.target=javax.swing.JTextField getTxtPrecioBase()
+comment19.target=javax.swing.JLabel getLblPrecioFinalCalculado()
+comment2.target=void inicializarBarraVuelo()
+comment20.target=javax.swing.JButton getBtnRegistrarPasaje()
+comment21.target=javax.swing.JPanel getPnlCuadriculaAsientos()
+comment22.target=javax.swing.JTable getTblPasajesVuelo()
+comment23.target=javax.swing.table.DefaultTableModel getModeloTablaPasajes()
+comment24.target=javax.swing.JButton getBtnCancelarPasaje()
+comment25.target=javax.swing.JButton getBtnVerHistorial()
+comment3.target=void inicializarCuerpoCentral()
+comment4.params=row column
+comment4.target=boolean isCellEditable(int, int)
+comment5.params=texto color
+comment5.target=javax.swing.JLabel crearItemLeyenda(java.lang.String, java.awt.Color)
+comment6.target=void actualizarDatos()
+comment7.target=void actualizarDetalleVuelo()
+comment8.params=vuelo
+comment8.target=void dibujarMapaAsientos(modelo.Vuelo)
+comment9.params=vuelo numSilla
+comment9.target=void mostrarOcupanteAsiento(modelo.Vuelo, int)
+numComments=26

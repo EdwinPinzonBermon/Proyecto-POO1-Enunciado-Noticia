@@ -53,8 +53,7 @@ public class Vuelo {
     }
 
     public FechaHora getFechaHoraSalida() {
-        //Falta por implementar 
-        return null;
+        return new FechaHora(fechaSalida, horaSalida);
     }
 
     public int getCapacidad() {
@@ -107,8 +106,8 @@ public class Vuelo {
 
     public int contarTripulantesPorRol(Rol rol) {
         int cantidad = 0;
-        for (int i = 0; i < tripulantes.size(); i++) {
-            if (tripulantes.get(i).getRol() == rol) {
+        for (Tripulante tripulante : tripulantes) {
+            if (tripulante.getRol() == rol) {
                 cantidad++;
             }
         }
@@ -122,17 +121,55 @@ public class Vuelo {
     }
 
     public boolean puedeDespegar() {
-        //Falta por implementar 
-        return false;
+        return avion != null && tripulacionCompleta() && estadoEmbarque == EstadoEmbarque.A_BORDO;
     }
 
     public boolean avanzarEstadoVuelo() {
-        //Falta por implementar 
-        return false;
+        if (estadoVuelo == EstadoVuelo.EN_EL_DESTINO) {
+            return false;
+        }
+        if (estadoVuelo == EstadoVuelo.ABORDANDO && !puedeDespegar()) {
+            return false;
+        }
+        switch (estadoVuelo) {
+            case DISPONIBLE:
+                estadoVuelo = EstadoVuelo.ABORDANDO;
+                break;
+            case ABORDANDO:
+                estadoVuelo = EstadoVuelo.DESPEGUE;
+                break;
+            case DESPEGUE:
+                estadoVuelo = EstadoVuelo.EN_EL_AIRE;
+                break;
+            case EN_EL_AIRE:
+                estadoVuelo = EstadoVuelo.ATERRIZAJE;
+                break;
+            case ATERRIZAJE:
+                estadoVuelo = EstadoVuelo.EN_EL_DESTINO;
+                break;
+            default:
+                return false;
+        }
+        return true;
     }
 
     public boolean avanzarEstadoEmbarque() {
-        //Falta por implementar 
+        if (estadoEmbarque == EstadoEmbarque.SIN_EMBARQUE) {
+            if (estadoVuelo == EstadoVuelo.ABORDANDO) {
+                estadoEmbarque = EstadoEmbarque.DURANTE_EMBARQUE;
+                return true;
+            }
+        } else if (estadoEmbarque == EstadoEmbarque.DURANTE_EMBARQUE) {
+            if (estadoVuelo == EstadoVuelo.ABORDANDO) {
+                estadoEmbarque = EstadoEmbarque.A_BORDO;
+                return true;
+            }
+        } else if (estadoEmbarque == EstadoEmbarque.A_BORDO) {
+            if (estadoVuelo == EstadoVuelo.ATERRIZAJE || estadoVuelo == EstadoVuelo.EN_EL_DESTINO) {
+                estadoEmbarque = EstadoEmbarque.DURANTE_DESEMBARQUE;
+                return true;
+            }
+        }
         return false;
     }
 
@@ -201,8 +238,7 @@ public class Vuelo {
     }
 
     public Pasaje buscarPasajePorAsiento(int numeroAsiento) {
-        for (int i = 0; i < pasajes.size(); i++) {
-            Pasaje pasaje = pasajes.get(i);
+        for (Pasaje pasaje : pasajes) {
             if (pasaje.getNumeroAsiento() == numeroAsiento && !pasaje.estaCancelado()) {
                 return pasaje;
             }
@@ -212,8 +248,8 @@ public class Vuelo {
 
     public int contarPasajesNoCancelados() {
         int cantidad = 0;
-        for (int i = 0; i < pasajes.size(); i++) {
-            if (!pasajes.get(i).estaCancelado()) {
+        for (Pasaje pasaje : pasajes) {
+            if (!pasaje.estaCancelado()) {
                 cantidad++;
             }
         }
@@ -222,8 +258,7 @@ public class Vuelo {
 
     public int contarPasajesPrioritarios() {
         int cantidad = 0;
-        for (int i = 0; i < pasajes.size(); i++) {
-            Pasaje pasaje = pasajes.get(i);
+        for (Pasaje pasaje : pasajes) {
             if (!pasaje.estaCancelado() && pasaje.getClase() == ClasePasaje.PRIORITARIA) {
                 cantidad++;
             }
@@ -244,8 +279,7 @@ public class Vuelo {
 
     public int calcularIngresoConfirmado() {
         int ingreso = 0;
-        for (int i = 0; i < pasajes.size(); i++) {
-            Pasaje pasaje = pasajes.get(i);
+        for (Pasaje pasaje : pasajes) {
             if (!pasaje.estaCancelado()) {
                 ingreso += pasaje.calcularPrecioFinal();
             }
@@ -266,7 +300,6 @@ public class Vuelo {
 
     @Override
     public String toString() {
-        //Falta por implementar 
-        return null;
+        return "Vuelo: " + codigo + " - Ruta: " + ruta.getCiudadSalida().getNombre() + " a " + ruta.getCiudadLlegada().getNombre() + " - Salida: " + getFechaHoraSalida().toString();
     }
 }

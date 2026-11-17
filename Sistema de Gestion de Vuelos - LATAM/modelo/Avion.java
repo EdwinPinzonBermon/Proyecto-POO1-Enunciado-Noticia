@@ -70,8 +70,8 @@ public class Avion {
     }
 
     public boolean tieneVueloActivo() {
-        for (int i = 0; i < vuelos.size(); i++) {
-            if (vuelos.get(i).estaActivo()) {
+        for (Vuelo vuelo : vuelos) {
+            if (vuelo.estaActivo()) {
                 return true;
             }
         }
@@ -103,7 +103,6 @@ public class Avion {
 
     @Override
     public String toString() {
-        //Falta por implementar 
-        return null;
+        return "Avion: " + matricula + " - Modelo: " + modelo + " - Capacidad: " + capacidad;
     }
 }

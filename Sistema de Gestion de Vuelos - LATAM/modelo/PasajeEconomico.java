@@ -21,7 +21,6 @@ public class PasajeEconomico extends Pasaje {
 
     @Override
     public String toString() {
-        //Falta por implementar 
-        return null;
+        return super.toString();
     }
 }

@@ -1,0 +1,20 @@
+#BlueJ class context
+#Mon Nov 16 17:55:44 COT 2026
+comment0.target=JFPanelOcupacion
+comment1.params=aerolinea
+comment1.target=JFPanelOcupacion(modelo.Aerolinea)
+comment10.target=javax.swing.JButton getBtnCalcularMetricas()
+comment11.target=javax.swing.JButton getBtnActualizarRanking()
+comment12.target=javax.swing.JTable getTblVuelosTop()
+comment13.target=javax.swing.table.DefaultTableModel getModeloTablaTop()
+comment2.target=void crearPanelConsulta()
+comment3.params=titulo valorInicial colorValor contenedor
+comment3.target=javax.swing.JLabel crearTarjeta(java.lang.String, java.lang.String, java.awt.Color, javax.swing.JPanel)
+comment4.target=void crearPanelRanking()
+comment5.params=row column
+comment5.target=boolean isCellEditable(int, int)
+comment6.target=void actualizarDatos()
+comment7.target=void actualizarMetricasVuelo()
+comment8.target=void actualizarRankingTop()
+comment9.target=javax.swing.JComboBox getCmbVueloConsultar()
+numComments=14

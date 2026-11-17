@@ -15,7 +15,7 @@ public class Control
     private Aerolinea aerolinea;
     private JFVentanaPrincipal ventana;
 
-    public Control() {
+    public Control(Aerolinea aerolinea, JFVentanaPrincipal ventana) {
         aerolinea = new Aerolinea("LATAM Airlines Colombia", new ArrayList<Avion>(), new ArrayList<Tripulante>(),
                                   new ArrayList<Pais>(), new ArrayList<Ciudad>(), new ArrayList<Ruta>(),
                                   new ArrayList<Vuelo>(), new ArrayList<Pasajero>());

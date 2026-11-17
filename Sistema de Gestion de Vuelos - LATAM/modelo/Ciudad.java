@@ -86,7 +86,6 @@ public class Ciudad {
 
     @Override
     public String toString() {
-        //Falta por implementar 
-        return null;
+        return "Ciudad: " + nombre + " (" + codigo + ")";
     }
 }
