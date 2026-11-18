@@ -8,17 +8,18 @@ public class JPAvionesYVuelos extends JPanel
     private JPanel panelIzquierda, panelCentro, panelRegistroAvion, panelSub1RA, panelSub2RA 
     ,panelProgramarVuelo, panelSub1PV, panelSub2PV, 
     panelAvionesYDisponibilidad, panelVuelosProgramados, panelAcciones, 
-    panelSub1AYD, panelSub2AYD, panelSub1VP, panelSub2VP, panelSub1A, 
-    panelSub2A, panelSub3A;
+    panelSub1AYD, panelSub2AYD, panelSub1VP, panelSub2VP, panelSub1A,
+    panelSub2A, panelSub3A, panelBusquedaVuelo;
     private JLabel lblMatricula, lblModelo, lblColor, lblCapacidadTotal, 
     lblAsientoPrioritarios, lblCodigo, lblRuta, lblFecha, 
     lblHora, lblCapacidad, lblAvionLibreOp, lblMostrar, 
     lblOrigen, lblDestino, lblAvion, lblAvionLibre;
     private JTextField txtMatricula, txtModelo, txtColor, txtCapacidadTotal, txtAsientosPrioritarios,
-    txtCodigo, txtFecha, txtHora, txtCapacidad;
+    txtCodigo, txtFecha, txtHora, txtCapacidad, txtBuscarMatricula, txtBuscarCodigoVuelo;
     private JComboBox cbRuta, cbAvionLibreOp, cbMostrar, cbOrigen, cbDestino, cbAvion, cbAvionLibre;
-    private JButton btnRegistrarAvion, btnCrearVuelo, btnFiltrar, btnTodos, btnAsignar, btnSiguienteFase, btnVerTripulacion;
+    private JButton btnRegistrarAvion, btnCrearVuelo, btnFiltrar, btnTodos, btnAsignar, btnSiguienteFase, btnAvanzarEmbarque, btnVerTripulacion, btnBuscarAvion, btnBuscarVuelo;
     private JScrollPane scrollAviones, scrollVuelos;
+    private JSplitPane separadorVertical;
     private JTable tablaAviones, tablaVuelos;
     private DefaultTableModel modeloAviones, modeloVuelos;
 
@@ -28,10 +29,11 @@ public class JPAvionesYVuelos extends JPanel
     }
 
     private void initComponentes(){
-        //PANEL IZQUIERDO
         panelIzquierda = new JPanel();
         panelIzquierda.setLayout(new BoxLayout(panelIzquierda, BoxLayout.Y_AXIS));
         panelIzquierda.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        panelIzquierda.setPreferredSize(new Dimension(420, 0));
+        panelIzquierda.setMinimumSize(new Dimension(360, 0));
 
         panelRegistroAvion = new JPanel();
         panelRegistroAvion.setLayout(new BoxLayout(panelRegistroAvion, BoxLayout.Y_AXIS));
@@ -48,11 +50,16 @@ public class JPAvionesYVuelos extends JPanel
         txtColor = new JTextField();
         txtCapacidadTotal = new JTextField();
         txtAsientosPrioritarios = new JTextField();
-        panelSub1RA.add(lblMatricula); panelSub1RA.add(txtMatricula);
-        panelSub1RA.add(lblModelo); panelSub1RA.add(txtModelo);
-        panelSub1RA.add(lblColor); panelSub1RA.add(txtColor);
-        panelSub1RA.add(lblCapacidadTotal); panelSub1RA.add(txtCapacidadTotal);
-        panelSub1RA.add(lblAsientoPrioritarios); panelSub1RA.add(txtAsientosPrioritarios);
+        panelSub1RA.add(lblMatricula);
+        panelSub1RA.add(txtMatricula);
+        panelSub1RA.add(lblModelo);
+        panelSub1RA.add(txtModelo);
+        panelSub1RA.add(lblColor);
+        panelSub1RA.add(txtColor);
+        panelSub1RA.add(lblCapacidadTotal);
+        panelSub1RA.add(txtCapacidadTotal);
+        panelSub1RA.add(lblAsientoPrioritarios);
+        panelSub1RA.add(txtAsientosPrioritarios);
         panelRegistroAvion.add(panelSub1RA);
 
         panelSub2RA = new JPanel(new BorderLayout());
@@ -84,12 +91,18 @@ public class JPAvionesYVuelos extends JPanel
         txtCapacidad = new JTextField();
         cbRuta = new JComboBox();
         cbAvionLibreOp = new JComboBox();
-        panelSub1PV.add(lblCodigo); panelSub1PV.add(txtCodigo);
-        panelSub1PV.add(lblRuta); panelSub1PV.add(cbRuta);
-        panelSub1PV.add(lblFecha); panelSub1PV.add(txtFecha);
-        panelSub1PV.add(lblHora); panelSub1PV.add(txtHora);
-        panelSub1PV.add(lblCapacidad); panelSub1PV.add(txtCapacidad);
-        panelSub1PV.add(lblAvionLibreOp); panelSub1PV.add(cbAvionLibreOp);
+        panelSub1PV.add(lblCodigo);
+        panelSub1PV.add(txtCodigo);
+        panelSub1PV.add(lblRuta);
+        panelSub1PV.add(cbRuta);
+        panelSub1PV.add(lblFecha);
+        panelSub1PV.add(txtFecha);
+        panelSub1PV.add(lblHora);
+        panelSub1PV.add(txtHora);
+        panelSub1PV.add(lblCapacidad);
+        panelSub1PV.add(txtCapacidad);
+        panelSub1PV.add(lblAvionLibreOp);
+        panelSub1PV.add(cbAvionLibreOp);
         panelProgramarVuelo.add(panelSub1PV);
 
         panelSub2PV = new JPanel(new BorderLayout());
@@ -104,118 +117,150 @@ public class JPAvionesYVuelos extends JPanel
         panelIzquierda.add(panelProgramarVuelo);
         panelIzquierda.add(Box.createVerticalGlue());
 
-        //PANEL CENTRO (Con GridBagLayout para repartir altura) 
-        panelCentro = new JPanel(new GridBagLayout());
+        panelCentro = new JPanel(new BorderLayout());
         panelCentro.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 1.0;
-        gbc.insets = new Insets(0, 0, 10, 0); 
-
-        // 1. Aviones y Disponibilidad
+        
         panelAvionesYDisponibilidad = new JPanel(new BorderLayout());
         panelAvionesYDisponibilidad.setBorder(BorderFactory.createTitledBorder("Aviones y Disponibilidad"));
-
-        panelSub1AYD = new JPanel(new FlowLayout(FlowLayout.LEFT)); 
+        
+        panelSub1AYD = new JPanel(); 
+        panelSub1AYD.setLayout(new BoxLayout(panelSub1AYD, BoxLayout.X_AXIS));
         lblMostrar = new JLabel("Mostrar:");
         cbMostrar = new JComboBox();
         panelSub1AYD.add(lblMostrar);
+        panelSub1AYD.add(Box.createHorizontalStrut(10));
         panelSub1AYD.add(cbMostrar);
+        panelSub1AYD.add(Box.createHorizontalStrut(15));
+        panelSub1AYD.add(new JLabel("Buscar matrícula:"));
+        txtBuscarMatricula = new JTextField(8);
+        btnBuscarAvion = new JButton("Buscar avión");
+        panelSub1AYD.add(txtBuscarMatricula);
+        panelSub1AYD.add(btnBuscarAvion);
         panelAvionesYDisponibilidad.add(panelSub1AYD, BorderLayout.NORTH);
-
+        
         panelSub2AYD = new JPanel(new BorderLayout());
         String [] columnasAviones = {"Matricula","Modelo","Color","Capacidad","Prioritarios","Estado Operativo"};
         modeloAviones = new DefaultTableModel(columnasAviones,0){
             @Override
-            public boolean isCellEditable(int row, int column) { return false; }
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
         };
         tablaAviones = new JTable(modeloAviones);
         scrollAviones = new JScrollPane(tablaAviones);
+        tablaAviones.setRowHeight(22);
+        tablaAviones.setFillsViewportHeight(true);
+        scrollAviones.setPreferredSize(new Dimension(500, 190));
         panelSub2AYD.add(scrollAviones, BorderLayout.CENTER);
         panelAvionesYDisponibilidad.add(panelSub2AYD, BorderLayout.CENTER);
 
-        gbc.gridy = 0;
-        gbc.weighty = 0.5; 
-        panelCentro.add(panelAvionesYDisponibilidad, gbc);
-
-        // 2. Vuelos Programados
-        panelVuelosProgramados = new JPanel(new BorderLayout());
-        panelVuelosProgramados.setBorder(BorderFactory.createTitledBorder("Vuelos Programados"));
-
-        panelSub1VP = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panelVuelosProgramados = new JPanel(new BorderLayout(5, 5));
+        panelVuelosProgramados.setBorder(BorderFactory.createTitledBorder("Vuelos programados"));
+        
+        panelSub1VP = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 5));
         lblOrigen = new JLabel("Origen:");
         lblDestino = new JLabel("Destino:");
-        lblAvion = new JLabel("Avión:");
+        lblAvion = new JLabel("Avion:");
         cbOrigen = new JComboBox();
         cbDestino = new JComboBox();
         cbAvion = new JComboBox();
         btnFiltrar = new JButton("Filtrar");
         btnTodos = new JButton("Todos");
+        panelSub1VP.add(lblOrigen);
+        panelSub1VP.add(Box.createHorizontalStrut(5));
+        panelSub1VP.add(cbOrigen);
+        panelSub1VP.add(Box.createHorizontalStrut(8));
+        panelSub1VP.add(lblDestino);
+        panelSub1VP.add(Box.createHorizontalStrut(5));
+        panelSub1VP.add(cbDestino);
+        panelSub1VP.add(Box.createHorizontalStrut(8));
+        panelSub1VP.add(lblAvion);
+        panelSub1VP.add(Box.createHorizontalStrut(5));
+        panelSub1VP.add(cbAvion);
+        panelSub1VP.add(Box.createHorizontalStrut(8));
+        panelSub1VP.add(btnFiltrar);
+        panelSub1VP.add(Box.createHorizontalStrut(5));
+        panelSub1VP.add(btnTodos);
 
-        panelSub1VP.add(lblOrigen); panelSub1VP.add(cbOrigen);
-        panelSub1VP.add(lblDestino); panelSub1VP.add(cbDestino);
-        panelSub1VP.add(lblAvion); panelSub1VP.add(cbAvion);
-        panelSub1VP.add(btnFiltrar); panelSub1VP.add(btnTodos);
-        panelVuelosProgramados.add(panelSub1VP, BorderLayout.NORTH);
+        JPanel panelFiltrosYBusqueda = new JPanel();
+        panelFiltrosYBusqueda.setLayout(new BoxLayout(panelFiltrosYBusqueda, BoxLayout.Y_AXIS));
+        panelFiltrosYBusqueda.add(panelSub1VP);
+
+        panelBusquedaVuelo = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 3));
+        panelBusquedaVuelo.add(new JLabel("Buscar código de vuelo:"));
+        txtBuscarCodigoVuelo = new JTextField(10);
+        btnBuscarVuelo = new JButton("Buscar vuelo");
+        panelBusquedaVuelo.add(txtBuscarCodigoVuelo);
+        panelBusquedaVuelo.add(btnBuscarVuelo);
+        panelFiltrosYBusqueda.add(panelBusquedaVuelo);
+        panelVuelosProgramados.add(panelFiltrosYBusqueda, BorderLayout.NORTH);
 
         panelSub2VP = new JPanel(new BorderLayout());
         String [] columnasVuelos = {"Codigo","Ruta","Salida","Llegada Est.", "Avion","Capacidad","Ocupacion","Estado Vuelo","Maletas"};
         modeloVuelos = new DefaultTableModel(columnasVuelos,0){
             @Override
-            public boolean isCellEditable(int row, int column) { return false; }
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
         };
         tablaVuelos = new JTable(modeloVuelos);
+        tablaVuelos.setRowHeight(22);
+        tablaVuelos.setFillsViewportHeight(true);
         scrollVuelos = new JScrollPane(tablaVuelos);
+        scrollVuelos.setPreferredSize(new Dimension(500, 230));
         panelSub2VP.add(scrollVuelos, BorderLayout.CENTER);
         panelVuelosProgramados.add(panelSub2VP, BorderLayout.CENTER);
 
-        gbc.gridy = 1;
-        gbc.weighty = 0.5; 
-        panelCentro.add(panelVuelosProgramados, gbc);
+        separadorVertical = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+                panelAvionesYDisponibilidad, panelVuelosProgramados);
+        separadorVertical.setResizeWeight(0.42);
+        separadorVertical.setDividerLocation(0.42);
+        separadorVertical.setContinuousLayout(true);
+        separadorVertical.setOneTouchExpandable(true);
+        separadorVertical.setDividerSize(8);
+        separadorVertical.setBorder(null);
+        panelAvionesYDisponibilidad.setMinimumSize(new Dimension(250, 150));
+        panelVuelosProgramados.setMinimumSize(new Dimension(250, 190));
+        panelCentro.add(separadorVertical, BorderLayout.CENTER);
 
-        // 3. Acciones sobre el vuelo
-        panelAcciones = new JPanel();
-        panelAcciones.setLayout(new BoxLayout(panelAcciones, BoxLayout.Y_AXIS));
-        panelAcciones.setBorder(BorderFactory.createTitledBorder("Acciones sobre el vuelo seleccionado en la tabla"));
-
-        panelSub1A = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        panelAcciones = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        panelAcciones.setBorder(BorderFactory.createTitledBorder("Acciones sobre el vuelo seleccionado"));
         lblAvionLibre = new JLabel("Avión libre:");
         cbAvionLibre = new JComboBox();
-        btnAsignar = new JButton("Asignar / Cambiar Avión");
-        panelSub1A.add(lblAvionLibre);
-        panelSub1A.add(cbAvionLibre);
-        panelSub1A.add(btnAsignar);
+        cbAvionLibre.setPreferredSize(new Dimension(190, 26));
+        btnAsignar = new JButton("Asignar / cambiar avión");
+        btnSiguienteFase = new JButton("Avanzar estado del vuelo");
+        btnAvanzarEmbarque = new JButton("Avanzar estado de maletas");
+        btnVerTripulacion = new JButton("Ver tripulación");
+        btnAsignar.setPreferredSize(new Dimension(150, 26));
+        btnSiguienteFase.setPreferredSize(new Dimension(160, 26));
+        btnAvanzarEmbarque.setPreferredSize(new Dimension(160, 26));
+        btnVerTripulacion.setPreferredSize(new Dimension(125, 26));
+        btnAsignar.setBackground(new Color(14, 4, 124));
+        btnAsignar.setForeground(Color.WHITE);
+        btnAsignar.setFocusPainted(false);
 
-        panelSub2A = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        btnSiguienteFase = new JButton("Siguiente Fase del Vuelo ->");
         btnSiguienteFase.setBackground(new Color(14, 4, 124));
         btnSiguienteFase.setForeground(Color.WHITE);
         btnSiguienteFase.setFocusPainted(false);
-        btnVerTripulacion = new JButton("Ver Tripulación del Vuelo");
-        panelSub2A.add(btnSiguienteFase);
-        panelSub2A.add(btnVerTripulacion);
 
-        panelSub3A = new JPanel(new BorderLayout());
-        JTextArea txtInfoFases = new JTextArea("Cada clic avanza una fase: DISPONIBLE -> ABORDANDO -> DESPEGUE -> EN_EL_AIRE -> ATERRIZAJE -> EN_EL_DESTINO. Las ventas de pasajes se cierran en DESPEGUE, las maletas cambian solas y, al llegar al destino, se liberan el avión y la tripulación.");
-        txtInfoFases.setLineWrap(true);
-        txtInfoFases.setWrapStyleWord(true);
-        txtInfoFases.setEditable(false);
-        txtInfoFases.setOpaque(false);
-        txtInfoFases.setForeground(Color.GRAY);
-        txtInfoFases.setFont(new Font("SansSerif", Font.ITALIC, 11));
-        panelSub3A.add(txtInfoFases, BorderLayout.CENTER);
+        btnAvanzarEmbarque.setBackground(new Color(14, 4, 124));
+        btnAvanzarEmbarque.setForeground(Color.WHITE);
+        btnAvanzarEmbarque.setFocusPainted(false);
 
-        panelAcciones.add(panelSub1A);
-        panelAcciones.add(panelSub2A);
-        panelAcciones.add(panelSub3A);
-
-        gbc.gridy = 2;
-        gbc.weighty = 0.0; 
-        gbc.insets = new Insets(0, 0, 0, 0);
-        panelCentro.add(panelAcciones, gbc);
+        btnVerTripulacion.setBackground(new Color(14, 4, 124));
+        btnVerTripulacion.setForeground(Color.WHITE);
+        btnVerTripulacion.setFocusPainted(false);
+        panelAcciones.add(lblAvionLibre);
+        panelAcciones.add(cbAvionLibre);
+        panelAcciones.add(btnAsignar);
+        panelAcciones.add(btnSiguienteFase);
+        panelAcciones.add(btnAvanzarEmbarque);
+        panelAcciones.add(btnVerTripulacion);
 
         this.add(panelCentro, BorderLayout.CENTER);
         this.add(panelIzquierda, BorderLayout.WEST);
+        this.add(panelAcciones, BorderLayout.SOUTH);
     }
 
     public JPanel getPanelIzquierda() {
@@ -445,6 +490,15 @@ public class JPAvionesYVuelos extends JPanel
     public JButton getBtnVerTripulacion() {
         return btnVerTripulacion;
     }
+
+    public JButton getBtnAvanzarEmbarque() {
+        return btnAvanzarEmbarque;
+    }
+
+    public JTextField getTxtBuscarMatricula() { return txtBuscarMatricula; }
+    public JTextField getTxtBuscarCodigoVuelo() { return txtBuscarCodigoVuelo; }
+    public JButton getBtnBuscarAvion() { return btnBuscarAvion; }
+    public JButton getBtnBuscarVuelo() { return btnBuscarVuelo; }
 
     public JScrollPane getScrollAviones() {
         return scrollAviones;

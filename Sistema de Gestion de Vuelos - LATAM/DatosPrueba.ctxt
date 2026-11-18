@@ -1,0 +1,26 @@
+#BlueJ class context
+#Tue Nov 17 20:33:40 COT 2026
+comment0.target=DatosPrueba
+comment1.params=vista modelo
+comment1.target=DatosPrueba(vista.JFPrincipal, modelo.Aerolinea)
+comment10.target=void refrescarTablaAviones()
+comment11.target=void refrescarTablaVuelos()
+comment12.target=void refrescarAvionesLibres()
+comment13.target=void refrescarCombosAdicionales()
+comment14.target=void refrescarTablaPasajes()
+comment2.target=void cargar()
+comment3.params=iata nombre pais
+comment3.target=void agregarCiudad(java.lang.String, java.lang.String, modelo.Pais)
+comment4.params=iataSalida iataLlegada duracion tope
+comment4.target=void agregarRuta(java.lang.String, java.lang.String, int, int)
+comment5.params=matricula modeloAvion color capacidad prioritarios
+comment5.target=void agregarAvion(java.lang.String, java.lang.String, java.lang.String, int, int)
+comment6.params=codigo iataSalida iataLlegada fecha hora capacidad matricula
+comment6.target=void agregarVuelo(java.lang.String, java.lang.String, java.lang.String, modelo.Fecha, modelo.Hora, int, java.lang.String)
+comment7.params=id nombre rol codigoVuelo
+comment7.target=void agregarTripulante(java.lang.String, java.lang.String, modelo.Rol, java.lang.String)
+comment8.params=id nombre
+comment8.target=void agregarPasajero(java.lang.String, java.lang.String)
+comment9.params=codigoVuelo idPasajero asiento clase precio
+comment9.target=void agregarPasaje(java.lang.String, java.lang.String, int, modelo.ClasePasaje, int)
+numComments=15

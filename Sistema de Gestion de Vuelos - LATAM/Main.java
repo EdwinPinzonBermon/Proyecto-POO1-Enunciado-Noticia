@@ -1,20 +1,14 @@
-import controlador.Control;
 import vista.*;
+import controlador.*;
 import modelo.*;
-/**
- * Write a description of class Main here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-public class Main
+import java.util.ArrayList;
+
+public class main
 {
-    public static void main(String[] args) {
-          Aerolinea modelo = new Aerolinea();
-  // inicializar listas con set* si el constructor vacío no las crea
-  DatosEjemplo.cargar(modelo);
-  JFVentanaPrincipal vista = new JFVentanaPrincipal(modelo);
-  new Control(modelo, vista);
-  vista.setVisible(true);
+    public static void main(String [] args){
+        JFPrincipal vista = new JFPrincipal();
+        Aerolinea modelo = new Aerolinea("LATAM Airlines", new ArrayList<Avion>(), new ArrayList<Tripulante>(), new ArrayList<Pais>(), new ArrayList<Ciudad>(), new ArrayList<Ruta>(), new ArrayList<Vuelo>(), new ArrayList<Pasajero>());
+        Control controlador = new Control(vista, modelo);
+        vista.setVisible(true);
     }
 }

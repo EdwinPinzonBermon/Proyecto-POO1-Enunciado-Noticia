@@ -85,4 +85,55 @@ public class JFPrincipal extends JFrame
     public JPOcupacionEIngresos getPanelOcupacionEIngresos() {
         return panelOcupacionEIngresos;
     }
-}
+
+//Start GetterSetterExtension Source Code
+
+    /**SET Method Propertie panelMedio*/
+    public void setPanelMedio(JPanel panelMedio){
+        this.panelMedio = panelMedio;
+    }//end method setPanelMedio
+
+    /**SET Method Propertie panelOpciones*/
+    public void setPanelOpciones(JPOpciones panelOpciones){
+        this.panelOpciones = panelOpciones;
+    }//end method setPanelOpciones
+
+    /**SET Method Propertie panelEncabezado*/
+    public void setPanelEncabezado(JPEncabezado panelEncabezado){
+        this.panelEncabezado = panelEncabezado;
+    }//end method setPanelEncabezado
+
+    /**SET Method Propertie panelControl*/
+    public void setPanelControl(JPControl panelControl){
+        this.panelControl = panelControl;
+    }//end method setPanelControl
+
+    /**SET Method Propertie panelRutasYCiudades*/
+    public void setPanelRutasYCiudades(JPRutasYCiudades panelRutasYCiudades){
+        this.panelRutasYCiudades = panelRutasYCiudades;
+    }//end method setPanelRutasYCiudades
+
+    /**SET Method Propertie panelAvionesYVuelos*/
+    public void setPanelAvionesYVuelos(JPAvionesYVuelos panelAvionesYVuelos){
+        this.panelAvionesYVuelos = panelAvionesYVuelos;
+    }//end method setPanelAvionesYVuelos
+
+    /**SET Method Propertie panelTripulacion*/
+    public void setPanelTripulacion(JPTripulacion panelTripulacion){
+        this.panelTripulacion = panelTripulacion;
+    }//end method setPanelTripulacion
+
+    /**SET Method Propertie panelPasajesYAsientos*/
+    public void setPanelPasajesYAsientos(JPPasajesYAsientos panelPasajesYAsientos){
+        this.panelPasajesYAsientos = panelPasajesYAsientos;
+    }//end method setPanelPasajesYAsientos
+
+    /**SET Method Propertie panelOcupacionEIngresos*/
+    public void setPanelOcupacionEIngresos(JPOcupacionEIngresos panelOcupacionEIngresos){
+        this.panelOcupacionEIngresos = panelOcupacionEIngresos;
+    }//end method setPanelOcupacionEIngresos
+
+//End GetterSetterExtension Source Code
+
+
+}//End class

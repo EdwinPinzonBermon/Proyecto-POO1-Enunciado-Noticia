@@ -9,7 +9,7 @@ public class JPTripulacion extends JPanel
     panelTripulacionYDisponibilidad, panelSub1TD, panelSub2TD;
     private JLabel lblIdentificacion, lblNombreCompleto, lblRol, lblAsignarVueloOp, lblMostrar;
     private JTextField txtIdentificacion, txtNombreCompleto;
-    private JComboBox cbRol, cbAsignarVueloOp, cbMostrar;
+    private JComboBox cbRol, cbAsignarVueloOp, cbMostrar, cbTripulante, cbVueloAsignar;
     private JButton btnRegistrarTripulante, btnAsignarTripulante;
     private JScrollPane scrollTripulacion;
     private JTable tablaTripulacion;
@@ -46,6 +46,8 @@ public class JPTripulacion extends JPanel
         cbRol.addItem("AYUDANTE");
         
         cbAsignarVueloOp = new JComboBox();
+        cbTripulante = new JComboBox();
+        cbVueloAsignar = new JComboBox();
         
         panelSub1RT.add(lblIdentificacion);
         panelSub1RT.add(txtIdentificacion);
@@ -92,6 +94,10 @@ public class JPTripulacion extends JPanel
         txtInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
         txtInfo.setBorder(BorderFactory.createEmptyBorder(10, 5, 0, 5));
 
+        panelSub3RT.add(new JLabel("Tripulante disponible:"));
+        panelSub3RT.add(cbTripulante);
+        panelSub3RT.add(new JLabel("Vuelo destino:"));
+        panelSub3RT.add(cbVueloAsignar);
         panelSub3RT.add(btnAsignarTripulante);
         panelSub3RT.add(txtInfo);
         panelSub3RT.setMaximumSize(new Dimension(Integer.MAX_VALUE, panelSub3RT.getPreferredSize().height));
@@ -229,4 +235,12 @@ public class JPTripulacion extends JPanel
     public DefaultTableModel getModeloTripulacion() {
         return modeloTripulacion;
     }
+    // Métodos de compatibilidad con el controlador de la versión actual.
+    public JTextField getTxtId() { return txtIdentificacion; }
+    public JTextField getTxtNombre() { return txtNombreCompleto; }
+    public JComboBox getCbVueloRegistro() { return cbAsignarVueloOp; }
+    public JComboBox getCbVueloAsignar() { return cbVueloAsignar; }
+    public JComboBox getCbTripulante() { return cbTripulante; }
+    public DefaultTableModel getModeloTablaTripulantes() { return modeloTripulacion; }
+
 }

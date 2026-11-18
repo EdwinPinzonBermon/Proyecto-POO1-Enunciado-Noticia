@@ -1,5 +1,5 @@
 #BlueJ class context
-#Tue Nov 17 18:38:56 COT 2026
+#Tue Nov 17 20:44:02 COT 2026
 comment0.target=JPAvionesYVuelos
 comment1.target=JPAvionesYVuelos()
 comment10.target=javax.swing.JPanel getPanelProgramarVuelo()
@@ -61,13 +61,18 @@ comment59.target=javax.swing.JButton getBtnAsignar()
 comment6.target=javax.swing.JPanel getPanelCentro()
 comment60.target=javax.swing.JButton getBtnSiguienteFase()
 comment61.target=javax.swing.JButton getBtnVerTripulacion()
-comment62.target=javax.swing.JScrollPane getScrollAviones()
-comment63.target=javax.swing.JScrollPane getScrollVuelos()
-comment64.target=javax.swing.JTable getTablaAviones()
-comment65.target=javax.swing.JTable getTablaVuelos()
-comment66.target=javax.swing.table.DefaultTableModel getModeloAviones()
-comment67.target=javax.swing.table.DefaultTableModel getModeloVuelos()
+comment62.target=javax.swing.JButton getBtnAvanzarEmbarque()
+comment63.target=javax.swing.JTextField getTxtBuscarMatricula()
+comment64.target=javax.swing.JTextField getTxtBuscarCodigoVuelo()
+comment65.target=javax.swing.JButton getBtnBuscarAvion()
+comment66.target=javax.swing.JButton getBtnBuscarVuelo()
+comment67.target=javax.swing.JScrollPane getScrollAviones()
+comment68.target=javax.swing.JScrollPane getScrollVuelos()
+comment69.target=javax.swing.JTable getTablaAviones()
 comment7.target=javax.swing.JPanel getPanelRegistroAvion()
+comment70.target=javax.swing.JTable getTablaVuelos()
+comment71.target=javax.swing.table.DefaultTableModel getModeloAviones()
+comment72.target=javax.swing.table.DefaultTableModel getModeloVuelos()
 comment8.target=javax.swing.JPanel getPanelSub1RA()
 comment9.target=javax.swing.JPanel getPanelSub2RA()
-numComments=68
+numComments=73

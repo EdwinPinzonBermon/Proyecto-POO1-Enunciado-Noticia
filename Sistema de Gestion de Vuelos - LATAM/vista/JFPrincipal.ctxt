@@ -1,12 +1,39 @@
 #BlueJ class context
-#Tue Nov 17 19:08:47 COT 2026
+#Tue Nov 17 20:44:02 COT 2026
 comment0.target=JFPrincipal
 comment1.target=JFPrincipal()
 comment10.target=JPTripulacion getPanelTripulacion()
 comment11.target=JPPasajesYAsientos getPanelPasajesYAsientos()
 comment12.target=JPOcupacionEIngresos getPanelOcupacionEIngresos()
+comment13.params=panelMedio
+comment13.target=void setPanelMedio(javax.swing.JPanel)
+comment13.text=SET Method Propertie panelMedio
+comment14.params=panelOpciones
+comment14.target=void setPanelOpciones(JPOpciones)
+comment14.text=SET Method Propertie panelOpciones
+comment15.params=panelEncabezado
+comment15.target=void setPanelEncabezado(JPEncabezado)
+comment15.text=SET Method Propertie panelEncabezado
+comment16.params=panelControl
+comment16.target=void setPanelControl(JPControl)
+comment16.text=SET Method Propertie panelControl
+comment17.params=panelRutasYCiudades
+comment17.target=void setPanelRutasYCiudades(JPRutasYCiudades)
+comment17.text=SET Method Propertie panelRutasYCiudades
+comment18.params=panelAvionesYVuelos
+comment18.target=void setPanelAvionesYVuelos(JPAvionesYVuelos)
+comment18.text=SET Method Propertie panelAvionesYVuelos
+comment19.params=panelTripulacion
+comment19.target=void setPanelTripulacion(JPTripulacion)
+comment19.text=SET Method Propertie panelTripulacion
 comment2.params=panelNuevo
 comment2.target=void reemplazarPanel(javax.swing.JPanel)
+comment20.params=panelPasajesYAsientos
+comment20.target=void setPanelPasajesYAsientos(JPPasajesYAsientos)
+comment20.text=SET Method Propertie panelPasajesYAsientos
+comment21.params=panelOcupacionEIngresos
+comment21.target=void setPanelOcupacionEIngresos(JPOcupacionEIngresos)
+comment21.text=SET Method Propertie panelOcupacionEIngresos
 comment3.target=void initComponentes()
 comment4.target=javax.swing.JPanel getPanelMedio()
 comment5.target=JPOpciones getPanelOpciones()
@@ -14,4 +41,4 @@ comment6.target=JPEncabezado getPanelEncabezado()
 comment7.target=JPControl getPanelControl()
 comment8.target=JPRutasYCiudades getPanelRutasYCiudades()
 comment9.target=JPAvionesYVuelos getPanelAvionesYVuelos()
-numComments=13
+numComments=22
