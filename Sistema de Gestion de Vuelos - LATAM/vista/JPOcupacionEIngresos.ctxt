@@ -1,0 +1,31 @@
+#BlueJ class context
+#Tue Nov 17 19:09:54 COT 2026
+comment0.target=JPOcupacionEIngresos
+comment1.target=JPOcupacionEIngresos()
+comment10.target=javax.swing.JPanel getPanelRanking()
+comment11.target=javax.swing.JPanel getPanelSub1R()
+comment12.target=javax.swing.JPanel getPanelSub2R()
+comment13.target=javax.swing.JLabel getLblSeleccionarVuelo()
+comment14.target=javax.swing.JLabel getLblOcupacionTitulo()
+comment15.target=javax.swing.JLabel getLblOcupacionValor()
+comment16.target=javax.swing.JLabel getLblIngresoTitulo()
+comment17.target=javax.swing.JLabel getLblIngresoValor()
+comment18.target=javax.swing.JLabel getLblAsientosTitulo()
+comment19.target=javax.swing.JLabel getLblAsientosValor()
+comment2.target=void initComponentes()
+comment20.target=javax.swing.JLabel getLblMensajeRanking()
+comment21.target=javax.swing.JComboBox getCbVuelo()
+comment22.target=javax.swing.JButton getBtnCalcularMetricas()
+comment23.target=javax.swing.JButton getBtnActualizarRanking()
+comment24.target=javax.swing.JScrollPane getScrollRanking()
+comment25.target=javax.swing.JTable getTablaRanking()
+comment26.target=javax.swing.table.DefaultTableModel getModeloRanking()
+comment3.params=row column
+comment3.target=boolean isCellEditable(int, int)
+comment4.target=javax.swing.JPanel getPanelMetricas()
+comment5.target=javax.swing.JPanel getPanelSub1M()
+comment6.target=javax.swing.JPanel getPanelSub2M()
+comment7.target=javax.swing.JPanel getPanelCaja1()
+comment8.target=javax.swing.JPanel getPanelCaja2()
+comment9.target=javax.swing.JPanel getPanelCaja3()
+numComments=27

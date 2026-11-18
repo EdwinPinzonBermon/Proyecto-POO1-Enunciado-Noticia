@@ -1,0 +1,16 @@
+#BlueJ class context
+#Mon Nov 16 22:45:52 COT 2026
+comment0.target=JPOpciones
+comment1.target=JPOpciones()
+comment10.target=javax.swing.JButton getBtnTripulacion()
+comment11.target=javax.swing.JButton getBtnPasajesYAsientos()
+comment12.target=javax.swing.JButton getBtnOcupacionEIngresos()
+comment2.target=void initComponentes()
+comment3.target=javax.swing.JLabel getLblResumen()
+comment4.target=javax.swing.JLabel getLblConfiguracionBase()
+comment5.target=javax.swing.JLabel getLblFlotaYOperacion()
+comment6.target=javax.swing.JLabel getLblVentasYMetricas()
+comment7.target=javax.swing.JButton getBtnPanelControl()
+comment8.target=javax.swing.JButton getBtnRutasYCiudades()
+comment9.target=javax.swing.JButton getBtnAvionesYVuelos()
+numComments=13
